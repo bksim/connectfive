@@ -1,4 +1,6 @@
 connectfive
 ===========
 
-connect five ai and gui
+Brandon Sim, Wesley Chen
+
+Implements a connect 5 GUI and AI bot in Python.
