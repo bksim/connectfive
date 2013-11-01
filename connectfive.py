@@ -52,23 +52,32 @@ class ConnectFiveBoard:
 
 class App(object):
     def __init__(self, root):
-    	self.board = ConnectFiveBoard()
+    	## game parameters
+    	self.size = 15
+    	self.gridSize = 40 #pixels
+    	self.width = (self.size+1)*self.gridSize
+    	self.height = (self.size+1)*self.gridSize
+
+    	## game initialization
+    	self.board = ConnectFiveBoard(self.size)
+    	
+    	## graphics components initialization
     	self.frame = Frame(root)
     	self.player = StringVar()
     	self.player.set("To move: black")
     	self.playerLabel = Label(root, textvariable=self.player)
     	self.playerLabel.pack()
 
-    	self.w = Canvas(root, width=640, height=640)
+    	self.w = Canvas(root, width=self.width, height=self.height)
     	self.w.pack()
     	for i in xrange(15):
-    		self.w.create_line(0, (i+1)*40, 640, (i+1)*40)
-    		self.w.create_line( (i+1)*40, 0, (i+1)*40, 640)
+    		self.w.create_line(0, (i+1)*self.gridSize, self.width, (i+1)*self.gridSize)
+    		self.w.create_line((i+1)*self.gridSize, 0, (i+1)*self.gridSize, self.height)
 
     def mouseClicked(self, event):
     	#print "clicked at", event.x, event.y
-    	x = int(round(event.y / 40.0) - 1)
-    	y = int(round(event.x / 40.0) - 1)
+    	x = int(round(event.y / float(self.gridSize)) - 1)
+    	y = int(round(event.x / float(self.gridSize)) - 1)
     	#print "move: ", str(x), str(y)
 
     	legal = self.board.playMove(x, y)
