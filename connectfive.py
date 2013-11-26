@@ -105,7 +105,7 @@ class ConnectFiveGraphics():
 
     	self.w = Canvas(self.root, width=self.width, height=self.height)
     	self.w.pack()
-    	for i in xrange(15):
+    	for i in xrange(self.size):
     		self.w.create_line(0, (i+1)*self.gridSize, self.width, (i+1)*self.gridSize)
     		self.w.create_line((i+1)*self.gridSize, 0, (i+1)*self.gridSize, self.height)
 
@@ -129,7 +129,7 @@ class ConnectFiveGraphics():
 	    	if legal == 'black' or legal == 'white':
 	    		print "GAME OVER: WINNER IS " + legal
     			self.player.set("GAME OVER: WINNER IS " + legal)
-    			self.root.destroy()
+    			#self.root.destroy()
 
 if __name__ == '__main__':
 	print("Welcome to Connect 5!")
