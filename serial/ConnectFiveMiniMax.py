@@ -37,6 +37,7 @@ class MinimaxAgent:
 		return gameState.isOver()
 
 	def evaluationFunction(self, gameState):
+		# come up with a heuristic here to evaluate how good a board is
 		return 0
 
 	def maxValue(self, gameState, agentIndex, depth):
