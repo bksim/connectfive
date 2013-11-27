@@ -8,8 +8,8 @@ class ConnectFiveGameState:
 
     # checks every position to see if it is the top or left most of a winning sequence
 	def isOver(self):
-		for row in xrange(self.size):
-			for col in xrange(self.size):
+		for row in xrange(self.size - 4):
+			for col in xrange(self.size - 4):
 				# get marker ta board position to check if blank/player1/player2
 				marker = self.board[row][col]
 
