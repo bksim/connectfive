@@ -6,8 +6,9 @@ class ConnectFiveGameState:
 		self.board = board
 		self.size = len(board)
 
-    # checks every position to see if it is the top or left most of a winning sequence
+	# checks every position to see if board has a winning game state
 	def isOver(self):
+		# starting positions from [0:n-4,0:n-4]
 		for row in xrange(self.size - 4):
 			for col in xrange(self.size - 4):
 				# get marker ta board position to check if blank/player1/player2
@@ -21,20 +22,50 @@ class ConnectFiveGameState:
 							numConnect += 1
 						else:
 							break
-			    	if numConnect == 5:
-			    		return True
+					if numConnect == 5:
+						return True
 
-			        # reset counter, keep count of how many horizontally in a ow match the marker, breaking early if possible
-			        numConnect = 1
-			        for offset in range(1,5):
+					# reset counter, keep count of how many horizontally in a ow match the marker, breaking early if possible
+					numConnect = 1
+					for offset in range(1,5):
 						if self.board[row][col+offset] == marker:
 							numConnect += 1
 						else:
 							break
 
 					#check if 5 in a row
-			    	if numConnect == 5:	
-			    		return True
+					if numConnect == 5:	
+						return 
+
+					# reset counter, keep count of how many upleft, downright diagonal in a ow match the marker, breaking early if possible
+					numConnect = 1
+					for offset in range(1,5):
+						if self.board[row+offset][col+offset] == marker:
+							numConnect += 1
+						else:
+							break
+
+					#check if 5 in a row
+					if numConnect == 5:	
+						return True
+
+		# starting positions from [n-5:n,n-5:n] 
+		for row in xrange(self.size - 5, self.size):
+			for col in xrange(self.size - 5, self.size):
+
+				# get marker ta board position to check if blank/player1/player2
+				marker = self.board[row][col]
+
+				if marker != 0:
+					# keep count of how many vertically in a ow match the marker, breaking early if possible
+					numConnect = 1
+					for offset in range(1,5):
+						if self.board[row-offset][col-offset] == marker:
+							numConnect += 1
+						else:
+							break
+					if numConnect == 5:
+						return True
 		return False
 
 	# returns a list of tuples, where each tuple is a legal move
