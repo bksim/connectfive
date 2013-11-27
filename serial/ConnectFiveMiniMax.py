@@ -7,40 +7,38 @@ class ConnectFiveGameState:
 		self.size = len(board)
 
     # checks every position to see if it is the top or left most of a winning sequence
-	def isOver(board):
+	def isOver(self):
 		for row in xrange(self.size):
 			for col in xrange(self.size):
-
 				# get marker ta board position to check if blank/player1/player2
-				marker = board[row][col]
+				marker = self.board[row][col]
 
 				if marker != 0:
-
 					# keep count of how many vertically in a ow match the marker, breaking early if possible
 					numConnect = 1
-					for offset in range(1,5)
-						if board[row+offset][col] == marker:
+					for offset in range(1,5):
+						if self.board[row+offset][col] == marker:
 							numConnect += 1
-					    else:
-					    	break
+						else:
+							break
 			    	if numConnect == 5:
 			    		return True
 
 			        # reset counter, keep count of how many horizontally in a ow match the marker, breaking early if possible
 			        numConnect = 1
-					for offset in range(1,5)
-						if board[row][col+offset] == marker:
+			        for offset in range(1,5):
+						if self.board[row][col+offset] == marker:
 							numConnect += 1
-					    else:
-					    	break
+						else:
+							break
 
 					#check if 5 in a row
-			    	if numConnect == 5:
+			    	if numConnect == 5:	
 			    		return True
 		return False
 
 	# returns a list of tuples, where each tuple is a legal move
-	def getLegalActions(agentIndex):
+	def getLegalActions(self, agentIndex):
 		legal_actions = []
 		for row in xrange(self.size):
 			for col in xrange(self.size):
@@ -107,6 +105,7 @@ class MinimaxAgent:
 
 if __name__ == '__main__':
 	minimax_agent = MinimaxAgent(2)
+	size = 15
 	clean_board = [x[:] for x in [[0]*size]*size]
 	gameState = ConnectFiveGameState(clean_board, 1)
 	minimax_agent.getAction(gameState, -1)
