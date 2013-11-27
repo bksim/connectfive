@@ -6,9 +6,38 @@ class ConnectFiveGameState:
 		self.board = board
 		self.size = len(board)
 
-	def isOver():
-		# wesley will fill this in
-		return True
+    # checks every position to see if it is the top or left most of a winning sequence
+	def isOver(board):
+		for row in xrange(self.size):
+			for col in xrange(self.size):
+
+				# get marker ta board position to check if blank/player1/player2
+				marker = board[row][col]
+
+				if marker != 0:
+
+					# keep count of how many vertically in a ow match the marker, breaking early if possible
+					numConnect = 1
+					for offset in range(1,5)
+						if board[row+offset][col] == marker:
+							numConnect += 1
+					    else:
+					    	break
+			    	if numConnect == 5:
+			    		return True
+
+			        # reset counter, keep count of how many horizontally in a ow match the marker, breaking early if possible
+			        numConnect = 1
+					for offset in range(1,5)
+						if board[row][col+offset] == marker:
+							numConnect += 1
+					    else:
+					    	break
+
+					#check if 5 in a row
+			    	if numConnect == 5:
+			    		return True
+		return False
 
 	# returns a list of tuples, where each tuple is a legal move
 	def getLegalActions(agentIndex):
