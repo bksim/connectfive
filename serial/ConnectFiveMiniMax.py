@@ -63,6 +63,14 @@ class ConnectFiveGameState:
 
 		return False
 
+	# return updated list of [pl-1's p1-2's p1-3's p1-4's p2-1's p2-2's p2-3's p2-4's]	
+	def updateHeruristic(self, current, move):
+		#use the move in the board to search 4 directions
+
+		# for each direction, say vertical, search up, for matches and keep count, search bot for matches and keep count, then subtract 1 from each of those counts and then add one to the up+down+1 count
+		
+	    return current
+
 	# returns a list of tuples, where each tuple is a legal move
 	def getLegalActions(self, agentIndex):
 		legal_actions = []
