@@ -1,75 +1,31 @@
 import copy
 
 class ConnectFiveGameState:
-	def __init__(self, board, currentTurn):
+	def __init__(self, board, currentTurn, firstPlayerHeuristic=None, secondPlayerHeuristic=None, lastMovePlayed=None):
 		self.currentTurn = currentTurn
 		self.board = board
 		self.size = len(board)
+		self.firstPlayerHeuristic = {}
+		self.secondPlayerHeuristic = {}
+		self.lastMovePlayed = None
 
-	# checks every position to see if board has a winning game state
+	'''TODO'''
 	def isOver(self):
-		# starting positions from [0:n-4,0:n-4]
-		for row in xrange(self.size):
-			for col in xrange(self.size):
-				# get marker ta board position to check if blank/player1/player2
-				marker = self.board[row][col]
-
-				if marker != 0:
-
-					# vertical 5 in a row
-					if row < self.size-4:
-						numConnect = 1
-						for offset in range(1,5):
-							if self.board[row+offset][col] == marker:
-								numConnect += 1
-							else:
-								break
-						if numConnect == 5:
-							return (True, marker)
-
-						# topleft-botright diagonal 5 in a row
-						if col < self.size-4:
-							numConnect = 1
-							for offset in range(1,5):
-								if self.board[row+offset][col+offset] == marker:
-									numConnect += 1
-								else:
-									break
-							if numConnect == 5:	
-								return (True, marker)
-
-
-						# topright-botleft diagonal 5 in a row
-						if col > 3
-							numConnect = 1
-							for offset in range(1,5):
-								if self.board[row+offset][col-offset] == marker:
-									numConnect += 1
-								else:
-									break
-							if numConnect == 5:
-								return (True, marker)
-
-					# horizontal 5 in a row
-					if col < self.size-4:
-						numConnect = 1
-						for offset in range(1,5):
-							if self.board[row][col+offset] == marker:`
-								numConnect += 1
-							else:
-								break
-						if numConnect == 5:	
-							return (True, marker)
-
+		# check here if it's over, is this right? **CHECK**
+		if (self.firstPlayerHeuristic and self.secondPlayerHeuristic and 
+			(self.firstPlayerHeuristic[5] > 0 or self.secondPlayerHeuristic[5] > 0)):
+			return True
 		return False
 
-	# return updated list of [pl-1's p1-2's p1-3's p1-4's p2-1's p2-2's p2-3's p2-4's]	
-	def updateHeruristic(self, current, move):
+	'''TODO'''
+	# updates self.firstPlayerHeuristic and self.secondPlayerHeuristic
+	# using last move played, which is stored in self.lastMovePlayed
+	# returns nothing
+	def updateHeuristic(self):
 		#use the move in the board to search 4 directions
-
 		# for each direction, say vertical, search up, for matches and keep count, search bot for matches and keep count, then subtract 1 from each of those counts and then add one to the up+down+1 count
 		
-	    return current
+	    return
 
 	# returns a list of tuples, where each tuple is a legal move
 	def getLegalActions(self, agentIndex):
@@ -80,12 +36,19 @@ class ConnectFiveGameState:
 					legal_actions.append((row, col))
 		return legal_actions
 
+	# returns a new ConnectFiveGameState given an action taken by some agentIndex
 	def generateSuccessor(self, agentIndex, action):
 		new_board = copy.deepcopy(self.board)
 		new_board[action[0]][action[1]] = agentIndex
-		successor = ConnectFiveGameState(new_board, -agentIndex)
+		successor = ConnectFiveGameState(new_board, -agentIndex, 
+			copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
+			self.lastMovePlayed)
 		return successor
 
+	# returns a dict with keys being the number in a row and values being how many of those
+	# opportunities there are
+	def getNumInARow(self):
+		return self.firstPlayerHeuristic if self.currentTurn == 1 else self.secondPlayerHeuristic
 
 # minimax agent
 class MinimaxAgent:
@@ -98,6 +61,7 @@ class MinimaxAgent:
 		return gameState.isOver()
 
 	def evaluationFunction(self, gameState):
+		h = gameState.getNumInARow()
 		# come up with a heuristic here to evaluate how good a board is
 		return 0
 
@@ -120,7 +84,7 @@ class MinimaxAgent:
 		v = float("inf")
 		actions = gameState.getLegalActions(gameState)
 		for action in actions:
-			v = min(v, self.maxValue(gameState,generateSuccessor(agentIndex, action), \
+			v = min(v, self.maxValue(gameState.generateSuccessor(agentIndex, action), \
 				-agentIndex, depth-1))
 		return v
 
