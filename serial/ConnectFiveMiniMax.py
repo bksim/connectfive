@@ -9,23 +9,142 @@ class ConnectFiveGameState:
 		self.secondPlayerHeuristic = {}
 		self.lastMovePlayed = None
 
-	'''TODO'''
 	def isOver(self):
-		# check here if it's over, is this right? **CHECK**
+		# Check if either player has a 5 in a row or greater
 		if (self.firstPlayerHeuristic and self.secondPlayerHeuristic and 
-			(self.firstPlayerHeuristic[5] > 0 or self.secondPlayerHeuristic[5] > 0)):
+			(self.firstPlayerHeuristic[4] > 0 or self.secondPlayerHeuristic[4] > 0)):
 			return True
 		return False
 
-	'''TODO'''
-	# updates self.firstPlayerHeuristic and self.secondPlayerHeuristic
-	# using last move played, which is stored in self.lastMovePlayed
-	# returns nothing
-	def updateHeuristic(self):
-		#use the move in the board to search 4 directions
-		# for each direction, say vertical, search up, for matches and keep count, search bot for matches and keep count, then subtract 1 from each of those counts and then add one to the up+down+1 count
+
+    '''TODO: Check logic of this/try it'''
+	# counter of X-in-a-row heursitic
+	def updateXinARowHeuristic(self):
+		# for each type of search, ex: vertical, count how many are the same piece and directly above and below - subtract from those values in the heuristic and add to the value of upper+lower+1
+
+		# search vertical
+		upperChain = 0
+		lowerChain = 0
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1]] == self.currentTurn:
+				upperChain += 1
+			else:
+				break
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0] + offset, self.lastMovePlayed[1]] == self.currentTurn:
+				lowerChain += 1
+			else:
+				break
+	    if self.currentTurn == 1:
+	    	self.firstPlayerHeuristic[upperChain] -= 1
+	    	self.firstPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.firstPlayerHeuristic[4] += 1
+	    	else:
+	    		self.firstPlayerHeuristic[upperChain + lowerChain + 1]
+		else:
+	    	self.secondPlayerHeuristic[upperChain] -= 1
+	    	self.secondPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.secondPlayerHeuristic[4] += 1
+	    	else:
+	    		self.secondPlayerHeuristic[upperChain + lowerChain + 1]
+
+		# search horizontal
+		upperChain = 0
+		lowerChain = 0
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0], self.lastMovePlayed[1] - offset] == self.currentTurn:
+				upperChain += 1
+			else:
+				break
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0], self.lastMovePlayed[1] + offset] == self.currentTurn:
+				lowerChain += 1
+			else:
+				break
+	    if self.currentTurn == 1:
+	    	self.firstPlayerHeuristic[upperChain] -= 1
+	    	self.firstPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.firstPlayerHeuristic[4] += 1
+	    	else:
+	    		self.firstPlayerHeuristic[upperChain + lowerChain + 1]
+		else:
+	    	self.secondPlayerHeuristic[upperChain] -= 1
+	    	self.secondPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.secondPlayerHeuristic[4] += 1
+	    	else:
+	    		self.secondPlayerHeuristic[upperChain + lowerChain + 1]
+
+		# search upper left, bottom right diagonal
+		upperChain = 0
+		lowerChain = 0
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1] - offset] == self.currentTurn:
+				upperChain += 1
+			else:
+				break
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0] + offset, self.lastMovePlayed[1] + offset] == self.currentTurn:
+				lowerChain += 1
+			else:
+				break
+	    if self.currentTurn == 1:
+	    	self.firstPlayerHeuristic[upperChain] -= 1
+	    	self.firstPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.firstPlayerHeuristic[4] += 1
+	    	else:
+	    		self.firstPlayerHeuristic[upperChain + lowerChain + 1]
+		else:
+	    	self.secondPlayerHeuristic[upperChain] -= 1
+	    	self.secondPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.secondPlayerHeuristic[4] += 1
+	    	else:
+	    		self.secondPlayerHeuristic[upperChain + lowerChain + 1]
+
+		# search upper right, bottom left diagonal
+		upperChain = 0
+		lowerChain = 0
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1] + offset] == self.currentTurn:
+				upperChain += 1
+			else:
+				break
+		for offset in xrange (1,5):
+			if self.board[self.lastMovePlayed[0] + offset, self.lastMovePlayed[1] - offset] == self.currentTurn:
+				lowerChain += 1
+			else:
+				break
+	    if self.currentTurn == 1:
+	    	self.firstPlayerHeuristic[upperChain] -= 1
+	    	self.firstPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.firstPlayerHeuristic[4] += 1
+	    	else:
+	    		self.firstPlayerHeuristic[upperChain + lowerChain + 1]
+		else:
+	    	self.secondPlayerHeuristic[upperChain] -= 1
+	    	self.secondPlayerHeuristic[lowerChain] -= 1
+	    	if upperChain + lowerChain > 4:
+	    		self.secondPlayerHeuristic[4] += 1
+	    	else:
+	    		self.secondPlayerHeuristic[upperChain + lowerChain + 1]
 		
 	    return
+
+	# convert heursitic data to a weighted score
+    def calcXinARowScore(self):
+    	#ADJUSTABLE SCORE WEIGHTINGS
+    	scoreWeights = [1,5,25,100,999999999]
+    	if self.currentTurn == 1:
+    		return self.firstPlayerHeuristic[0] * scoreWeights[0] + self.firstPlayerHeuristic[1] * scoreWeights[1] + self.firstPlayerHeuristic[2] * scoreWeights[2] +  self.firstPlayerHeuristic[3] * scoreWeights[3] + self.firstPlayerHeuristic[4] * scoreWeights[4]
+    	else:
+    		return self.secondPlayerHeuristic[0] * scoreWeights[0] + self.secondPlayerHeuristic[1] * scoreWeights[1] + self.secondPlayerHeuristic[2] * scoreWeights[2] +  self.secondPlayerHeuristic[3] * scoreWeights[3] + self.secondPlayerHeuristic[4] * scoreWeights[4]
+
 
 	# returns a list of tuples, where each tuple is a legal move
 	def getLegalActions(self, agentIndex):
