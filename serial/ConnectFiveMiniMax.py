@@ -22,7 +22,7 @@ class ConnectFiveGameState:
 
         # search vertical
         upperChain = 0
-        lowerChain = 0655035424655035424655035424
+        lowerChain = 0
         for offset in xrange (1,5):
             if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1]] == self.currentTurn:
                 upperChain += 1
@@ -161,6 +161,7 @@ class ConnectFiveGameState:
         successor = ConnectFiveGameState(new_board, -agentIndex, 
             copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
             self.lastMovePlayed)
+       	successor.updateXinARowHeuristic()
         return successor
 
     # returns a dict with keys being the number in a row and values being how many of those
@@ -179,9 +180,8 @@ class MinimaxAgent:
         return gameState.isOver()
 
     def evaluationFunction(self, gameState):
-        h = gameState.getNumInARow()
         # come up with a heuristic here to evaluate how good a board is
-        return 0
+        return gameState.calcXinARowScore()
 
     def maxValue(self, gameState, agentIndex, depth):
         if depth == 0 or self.is_terminal(gameState):
@@ -224,4 +224,4 @@ if __name__ == '__main__':
     size = 15
     clean_board = [x[:] for x in [[0]*size]*size]
     gameState = ConnectFiveGameState(clean_board, 1)
-    minimax_agent.getAction(gameState, -1)
+    print minimax_agent.getAction(gameState, -1)
