@@ -1,13 +1,26 @@
 import copy
 
 class ConnectFiveGameState:
-    def __init__(self, board, currentTurn, firstPlayerHeuristic=None, secondPlayerHeuristic=None, lastMovePlayed=None):
+    def __init__(self, board, currentTurn, firstPlayerHeuristic={}, secondPlayerHeuristic={}, lastMovePlayed=None):
         self.currentTurn = currentTurn
         self.board = board
         self.size = len(board)
-        self.firstPlayerHeuristic = {}
-        self.secondPlayerHeuristic = {}
-        self.lastMovePlayed = None
+        self.firstPlayerHeuristic = firstPlayerHeuristic
+        self.secondPlayerHeuristic = secondPlayerHeuristic
+        self.lastMovePlayed = lastMovePlayed
+
+        if self.firstPlayerHeuristic == {}:
+        	self.firstPlayerHeuristic[0] = 0
+        	self.firstPlayerHeuristic[1] = 0
+        	self.firstPlayerHeuristic[2] = 0
+        	self.firstPlayerHeuristic[3] = 0
+        	self.firstPlayerHeuristic[4] = 0
+        if self.secondPlayerHeuristic == {}:
+        	self.secondPlayerHeuristic[0] = 0
+        	self.secondPlayerHeuristic[1] = 0
+        	self.secondPlayerHeuristic[2] = 0
+        	self.secondPlayerHeuristic[3] = 0
+        	self.secondPlayerHeuristic[4] = 0
 
     def isOver(self):
         # Check if either player has a 5 in a row or greater
@@ -23,13 +36,13 @@ class ConnectFiveGameState:
         # search vertical
         upperChain = 0
         lowerChain = 0
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1]] == self.currentTurn:
-                upperChain += 1
-            else:
-                break
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0] + offset, self.lastMovePlayed[1]] == self.currentTurn:
+        for offset in xrange(1,5):
+        	if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1]] == self.currentTurn:
+        		upperChain += 1
+        	else:
+        		break
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0] + offset][self.lastMovePlayed[1]] == self.currentTurn:
                 lowerChain += 1
             else:
                 break
@@ -52,13 +65,13 @@ class ConnectFiveGameState:
         # search horizontal
         upperChain = 0
         lowerChain = 0
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0], self.lastMovePlayed[1] - offset] == self.currentTurn:
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0]][self.lastMovePlayed[1] - offset] == self.currentTurn:
                 upperChain += 1
             else:
                 break
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0], self.lastMovePlayed[1] + offset] == self.currentTurn:
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0]][self.lastMovePlayed[1] + offset] == self.currentTurn:
                 lowerChain += 1
             else:
                 break
@@ -80,13 +93,13 @@ class ConnectFiveGameState:
         # search upper left, bottom right diagonal
         upperChain = 0
         lowerChain = 0
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1] - offset] == self.currentTurn:
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1] - offset] == self.currentTurn:
                 upperChain += 1
             else:
                 break
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0] + offset, self.lastMovePlayed[1] + offset] == self.currentTurn:
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0] + offset][self.lastMovePlayed[1] + offset] == self.currentTurn:
                 lowerChain += 1
             else:
                 break
@@ -108,13 +121,13 @@ class ConnectFiveGameState:
         # search upper right, bottom left diagonal
         upperChain = 0
         lowerChain = 0
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0] - offset, self.lastMovePlayed[1] + offset] == self.currentTurn:
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1] + offset] == self.currentTurn:
                 upperChain += 1
             else:
                 break
-        for offset in xrange (1,5):
-            if self.board[self.lastMovePlayed[0] + offset, self.lastMovePlayed[1] - offset] == self.currentTurn:
+        for offset in xrange(1,5):
+            if self.board[self.lastMovePlayed[0] + offset][self.lastMovePlayed[1] - offset] == self.currentTurn:
                 lowerChain += 1
             else:
                 break
@@ -140,9 +153,9 @@ class ConnectFiveGameState:
         #ADJUSTABLE SCORE WEIGHTINGS
         scoreWeights = [1,5,25,100,999999999]
         if self.currentTurn == 1:
-            return self.firstPlayerHeuristic[0] * scoreWeights[0] + self.firstPlayerHeuristic[1] * scoreWeights[1] + self.firstPlayerHeuristic[2] * scoreWeights[2] +  self.firstPlayerHeuristic[3] * scoreWeights[3] + self.firstPlayerHeuristic[4] * scoreWeights[4]
+        	return sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
         else:
-            return self.secondPlayerHeuristic[0] * scoreWeights[0] + self.secondPlayerHeuristic[1] * scoreWeights[1] + self.secondPlayerHeuristic[2] * scoreWeights[2] +  self.secondPlayerHeuristic[3] * scoreWeights[3] + self.secondPlayerHeuristic[4] * scoreWeights[4]
+        	return sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
 
 
     # returns a list of tuples, where each tuple is a legal move
@@ -160,7 +173,8 @@ class ConnectFiveGameState:
         new_board[action[0]][action[1]] = agentIndex
         successor = ConnectFiveGameState(new_board, -agentIndex, 
             copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
-            self.lastMovePlayed)
+            action)
+        print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed)
        	successor.updateXinARowHeuristic()
         return successor
 
