@@ -37,11 +37,15 @@ class ConnectFiveGameState:
         upperChain = 0
         lowerChain = 0
         for offset in xrange(1,5):
+            if self.lastMovePlayed[0] - offset < 0:
+                break
         	if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1]] == self.currentTurn:
         		upperChain += 1
         	else:
         		break
         for offset in xrange(1,5):
+            if self.lastMovePlayed[0] + offset >= self.size:
+                break
             if self.board[self.lastMovePlayed[0] + offset][self.lastMovePlayed[1]] == self.currentTurn:
                 lowerChain += 1
             else:
@@ -66,11 +70,15 @@ class ConnectFiveGameState:
         upperChain = 0
         lowerChain = 0
         for offset in xrange(1,5):
+            if self.lastMovePlayed[1] - offset < 0:
+                break
             if self.board[self.lastMovePlayed[0]][self.lastMovePlayed[1] - offset] == self.currentTurn:
                 upperChain += 1
             else:
                 break
         for offset in xrange(1,5):
+            if self.lastMovePlayed[1] + offset >= self.size:
+                break
             if self.board[self.lastMovePlayed[0]][self.lastMovePlayed[1] + offset] == self.currentTurn:
                 lowerChain += 1
             else:
@@ -94,11 +102,15 @@ class ConnectFiveGameState:
         upperChain = 0
         lowerChain = 0
         for offset in xrange(1,5):
+            if self.lastMovePlayed[0] - offset < 0 or self.lastMovePlayed[1] - offset < 0:
+                break
             if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1] - offset] == self.currentTurn:
                 upperChain += 1
             else:
                 break
         for offset in xrange(1,5):
+            if self.lastMovePlayed[0] + offset >= self.size or  self.lastMovePlayed[1] + offset >= self.size:
+                break
             if self.board[self.lastMovePlayed[0] + offset][self.lastMovePlayed[1] + offset] == self.currentTurn:
                 lowerChain += 1
             else:
@@ -122,11 +134,15 @@ class ConnectFiveGameState:
         upperChain = 0
         lowerChain = 0
         for offset in xrange(1,5):
+            if self.lastMovePlayed[0] - offset < 0 or self.lastMovePlayed[1] + offset >= self.size:
+                break
             if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1] + offset] == self.currentTurn:
                 upperChain += 1
             else:
                 break
         for offset in xrange(1,5):
+            if self.lastMovePlayed[0] + offset >= self.size or self.lastMovePlayed[1] - offset < 0:
+                break
             if self.board[self.lastMovePlayed[0] + offset][self.lastMovePlayed[1] - offset] == self.currentTurn:
                 lowerChain += 1
             else:
