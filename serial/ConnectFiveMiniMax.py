@@ -196,9 +196,10 @@ class ConnectFiveGameState:
                 self.secondPlayerHeuristic[upperChain + lowerChain] += 1
             else:
                 isolatedCheck += 1
-        
+        print isolatedCheck
+        print self.currentTurn
         # Account for undercounting
-        if isolatedCheck == 4 and self.lastMovePlayed[0] > 0 and self.lastMovePlayed[1] > 0:
+        if isolatedCheck == 4:
             if self.currentTurn == 1:
                 self.firstPlayerHeuristic[0] += 1
             else:
@@ -230,14 +231,15 @@ class ConnectFiveGameState:
     def generateSuccessor(self, agentIndex, action):
         new_board = copy.deepcopy(self.board)
         new_board[action[0]][action[1]] = agentIndex
-        successor = ConnectFiveGameState(new_board, -agentIndex, 
+        successor = ConnectFiveGameState(new_board, agentIndex, 
             copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
             action)
         successor.updateXinARowHeuristic()
+        successor.currentTurn = -successor.currentTurn
 
         print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed) + "  TURN: " + str(-successor.currentTurn)
-        print self.firstPlayerHeuristic
-        print self.secondPlayerHeuristic
+        print successor.firstPlayerHeuristic
+        print successor.secondPlayerHeuristic
         return successor
 
     # returns a dict with keys being the number in a row and values being how many of those
