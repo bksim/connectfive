@@ -169,10 +169,11 @@ class ConnectFiveGameState:
         #ADJUSTABLE SCORE WEIGHTINGS
         scoreWeights = [1,5,25,100,999999999]
         if self.currentTurn == 1:
-        	return sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
+        	heuristic = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
         else:
-        	return sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
-
+        	heuristic = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
+        print heuristic
+        return heuristic
 
     # returns a list of tuples, where each tuple is a legal move
     def getLegalActions(self, agentIndex):
@@ -201,7 +202,7 @@ class ConnectFiveGameState:
 
 # minimax agent
 class MinimaxAgent:
-    def __init__(self, depth=2):
+    def __init__(self, depth=1):
         # fill in stuff here
         self.depth = depth
 
@@ -226,6 +227,7 @@ class MinimaxAgent:
         return v
 
     def minValue(self, gameState, agentIndex, depth):
+    	print depth
         if depth == 0 or self.is_terminal(gameState):
             return self.evaluationFunction(gameState)
 
@@ -250,8 +252,12 @@ class MinimaxAgent:
 
 
 if __name__ == '__main__':
-    minimax_agent = MinimaxAgent(2)
+    minimax_agent = MinimaxAgent(1)
     size = 15
     clean_board = [x[:] for x in [[0]*size]*size]
+    clean_board[7][7] = 1
+    clean_board[7][8] = 1
+    clean_board[7][9] = 1
+    print clean_board
     gameState = ConnectFiveGameState(clean_board, 1)
     print minimax_agent.getAction(gameState, -1)
