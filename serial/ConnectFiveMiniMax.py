@@ -214,7 +214,6 @@ class ConnectFiveGameState:
         	heuristic = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
         else:
         	heuristic = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
-        print self.secondPlayerHeuristic
         #print heuristic
         return heuristic
 
@@ -234,8 +233,11 @@ class ConnectFiveGameState:
         successor = ConnectFiveGameState(new_board, -agentIndex, 
             copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
             action)
-        print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed)
-       	successor.updateXinARowHeuristic()
+        successor.updateXinARowHeuristic()
+
+        print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed) + "  TURN: " + str(-successor.currentTurn)
+        print self.firstPlayerHeuristic
+        print self.secondPlayerHeuristic
         return successor
 
     # returns a dict with keys being the number in a row and values being how many of those
@@ -270,7 +272,6 @@ class MinimaxAgent:
         return v
 
     def minValue(self, gameState, agentIndex, depth):
-    	print depth
         if depth == 0 or self.is_terminal(gameState):
             return self.evaluationFunction(gameState)
 
@@ -295,12 +296,18 @@ class MinimaxAgent:
 
 
 if __name__ == '__main__':
-    minimax_agent = MinimaxAgent(1)
+    minimax_agent = MinimaxAgent(depth=1) #depth = 1
     size = 15
     clean_board = [x[:] for x in [[0]*size]*size]
     clean_board[7][7] = 1
     clean_board[7][8] = 1
     clean_board[7][9] = 1
     print clean_board
-    gameState = ConnectFiveGameState(clean_board, 1)
+    first = {}
+    first[0] = 0 
+    first[1] = 0
+    first[2] = 1
+    first[3] = 0
+    first[4] = 0
+    gameState = ConnectFiveGameState(clean_board, -1, firstPlayerHeuristic=first, lastMovePlayed=(7,7))
     print minimax_agent.getAction(gameState, -1)
