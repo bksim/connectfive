@@ -196,8 +196,8 @@ class ConnectFiveGameState:
                 self.secondPlayerHeuristic[upperChain + lowerChain] += 1
             else:
                 isolatedCheck += 1
-        print isolatedCheck
-        print self.currentTurn
+        #print isolatedCheck
+        #print self.currentTurn
         # Account for undercounting
         if isolatedCheck == 4:
             if self.currentTurn == 1:
@@ -211,12 +211,19 @@ class ConnectFiveGameState:
     def calcXinARowScore(self):
         #ADJUSTABLE SCORE WEIGHTINGS
         scoreWeights = [1,5,25,100,999999999]
-        if self.currentTurn == 1:
-        	heuristic = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
+
+        p1score = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
+        p2score = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
+
+
+        '''TODO: So if you flip this to 1, it'll work for depth 0, else it works for depth 1'''
+        if self.currentTurn == -1:
+        	score = p2score - p1score
         else:
-        	heuristic = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
-        #print heuristic
-        return heuristic
+        	score = p1score - p2score
+
+        print "score: " + str(score)
+        return score
 
     # returns a list of tuples, where each tuple is a legal move
     def getLegalActions(self, agentIndex):
@@ -301,9 +308,9 @@ if __name__ == '__main__':
     minimax_agent = MinimaxAgent(depth=1) #depth = 1
     size = 15
     clean_board = [x[:] for x in [[0]*size]*size]
-    clean_board[7][7] = 1
-    clean_board[7][8] = 1
-    clean_board[7][9] = 1
+    clean_board[7][7] = -1
+    clean_board[7][8] = -1
+    clean_board[7][9] = -1
     print clean_board
     first = {}
     first[0] = 0 
@@ -311,5 +318,5 @@ if __name__ == '__main__':
     first[2] = 1
     first[3] = 0
     first[4] = 0
-    gameState = ConnectFiveGameState(clean_board, -1, firstPlayerHeuristic=first, lastMovePlayed=(7,7))
+    gameState = ConnectFiveGameState(clean_board, -1, secondPlayerHeuristic=first, lastMovePlayed=(7,7))
     print minimax_agent.getAction(gameState, -1)
