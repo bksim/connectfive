@@ -220,7 +220,7 @@ class ConnectFiveGameState:
         
         score = p2score - p1score
 
-        print "score: " + str(score)
+        #print "score: " + str(score)
         return score
 
     # returns a list of tuples, where each tuple is a legal move
@@ -242,9 +242,9 @@ class ConnectFiveGameState:
         successor.updateXinARowHeuristic()
         successor.currentTurn = -successor.currentTurn
 
-        print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed) + "  TURN: " + str(-successor.currentTurn)
-        print successor.firstPlayerHeuristic
-        print successor.secondPlayerHeuristic
+        #print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed) + "  TURN: " + str(-successor.currentTurn)
+        #print successor.firstPlayerHeuristic
+        #print successor.secondPlayerHeuristic
         return successor
 
     # returns a dict with keys being the number in a row and values being how many of those
@@ -303,13 +303,14 @@ class MinimaxAgent:
 
 
 if __name__ == '__main__':
-    minimax_agent = MinimaxAgent(depth=1) #depth = 1
+    minimax_agent = MinimaxAgent(depth=2) #depth = 1
     size = 15
     clean_board = [x[:] for x in [[0]*size]*size]
     clean_board[7][7] = -1
     clean_board[7][8] = -1
     clean_board[7][9] = -1
-    print clean_board
+    
+    #print clean_board
     first = {}
     first[0] = 0 
     first[1] = 0
