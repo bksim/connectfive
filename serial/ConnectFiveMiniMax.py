@@ -217,10 +217,8 @@ class ConnectFiveGameState:
 
 
         '''TODO: So if you flip this to 1, it'll work for depth 0, else it works for depth 1'''
-        if self.currentTurn == -1:
-        	score = p2score - p1score
-        else:
-        	score = p1score - p2score
+        
+        score = p2score - p1score
 
         print "score: " + str(score)
         return score
