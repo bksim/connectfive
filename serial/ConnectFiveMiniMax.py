@@ -303,12 +303,12 @@ class MinimaxAgent:
 
 
 if __name__ == '__main__':
-    minimax_agent = MinimaxAgent(depth=2) #depth = 1
+    minimax_agent = MinimaxAgent(depth=1) #depth = 1
     size = 15
     clean_board = [x[:] for x in [[0]*size]*size]
-    clean_board[7][7] = -1
-    clean_board[7][8] = -1
-    clean_board[7][9] = -1
+    clean_board[7][5] = -1
+    clean_board[8][6] = -1
+    clean_board[9][7] = -1
     
     #print clean_board
     first = {}
