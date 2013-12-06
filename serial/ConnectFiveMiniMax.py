@@ -57,6 +57,15 @@ class ConnectFiveGameState:
             return True
         return False
 
+    def getWinner(self):
+        if self.firstPlayerHeuristic and self.secondPlayerHeuristic:
+            if self.firstPlayerHeuristic[4] > 0:
+                return 1
+            elif self.secondPlayerHeuristic[4] > 0:
+                return -1
+            else:
+                return False
+                
     # counter of X-in-a-row heursitic
     '''Does not do 1 below properly, also starts at -1 for 1 piece....'''
     def updateXinARowHeuristic(self):
@@ -238,7 +247,7 @@ class ConnectFiveGameState:
     # convert heursitic data to a weighted score
     def calcXinARowScore(self):
         #ADJUSTABLE SCORE WEIGHTINGS
-        scoreWeights = [1,5,25,100,999999999]
+        scoreWeights = [1,5,25,1000000,float('inf')]
 
         p1score = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
         p2score = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])

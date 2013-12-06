@@ -40,19 +40,8 @@ class ConnectFiveGraphics():
     	currentTurn = self.gameState.currentTurn
     	# if legal
     	if (x, y) in self.gameState.getLegalActions(currentTurn):
-    		self.gameState = self.gameState.generateSuccessor(currentTurn, (x, y))
-    		# game over
-    		if self.gameState.isOver():
-    			print "GAME OVER"
-    			self.player.set("GAME OVER")
-    		currentColorString = 'black' if currentTurn == -1 else 'white'
-    		self.player.set("To move: " + currentColorString)
-    		r = 20
-    		drawX = (x+1)*40
-    		drawY = (y+1)*40
-    		self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, \
-    			fill=('white' if currentTurn == -1 else 'black'))
-
+    		self.playMove((x, y))
+    		
     		# make an AI agent
     		alphabeta_agent = AlphaBetaAgent(depth=1)
     		# get ai's move
@@ -60,18 +49,25 @@ class ConnectFiveGraphics():
     		print "AI WOULD NOW PLAY: " + str(ai_move)
     		# play ai's move for it if necessary
     		if self.activateAI:
-    			currentTurnAI = self.gameState.currentTurn
-    			self.gameState = self.gameState.generateSuccessor(currentTurnAI, ai_move)
-    			if self.gameState.isOver():
-    				print "GAME OVER"
-    				self.player.set("GAME OVER")
-    			currentColorString = 'black' if currentTurnAI == -1 else 'white'
-    			self.player.set("To move: " + currentColorString)
-    			r = 20
-    			drawX = (ai_move[0]+1)*40
-    			drawY = (ai_move[1]+1)*40
-    			self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, \
-    				fill=('white' if currentTurnAI == -1 else 'black'))
+    			self.playMove(ai_move)
+
+    def drawMove(self, action, currentTurn):
+    	r = 20
+    	print "HERE"
+    	drawX = (action[0]+1)*40
+    	drawY = (action[1]+1)*40
+    	self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, fill=('white' if currentTurn == -1 else 'black'))
+
+    def playMove(self, action):
+    	currentTurn = self.gameState.currentTurn
+    	self.gameState = self.gameState.generateSuccessor(currentTurn, action)
+    	if self.gameState.isOver():
+    	    winnerString = "black" if self.gameState.getWinner() == 1 else "white"
+    	    print "GAME OVER - WINNER IS: " + winnerString
+            self.player.set("GAME OVER - WINNER IS: " + winnerString)
+        toMoveString = "black" if currentTurn == -1 else "white"
+        self.player.set("To move: " + toMoveString)
+        self.drawMove(action, currentTurn)
 
 if __name__ == '__main__':
     print("Welcome to Connect 5!")
@@ -93,5 +89,4 @@ if __name__ == '__main__':
     	spiral.append((i, 0))
 	
     gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
-    
     boardGraphics = ConnectFiveGraphics(gameState, activateAI=True)
