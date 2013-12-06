@@ -399,7 +399,7 @@ class AlphaBetaAgent:
 
 if __name__ == '__main__':
     minimax_agent = MinimaxAgent(depth=1) #depth = 1
-    alphabeta_agent = AlphaBetaAgent(depth=2)
+    alphabeta_agent = AlphaBetaAgent(depth=1)
     size = 15
 
     # construct spiral CCW
