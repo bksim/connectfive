@@ -1,7 +1,5 @@
-import ConnectFiveMiniMax
-
-
-
+from ConnectFiveMiniMax import ConnectFiveGameState
+from ConnectFiveMiniMax import AlphaBetaAgent
 
 class ConnectFiveGraphics():
     def __init__(self):
@@ -49,12 +47,6 @@ class ConnectFiveGraphics():
 	    		print "GAME OVER: WINNER IS " + legal
     			self.player.set("GAME OVER: WINNER IS " + legal)
     			#self.root.destroy()
-
-
-
-
-
-
 
 if __name__ == '__main__':
 	print("Welcome to Connect 5!")
