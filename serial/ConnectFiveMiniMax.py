@@ -224,13 +224,39 @@ class ConnectFiveGameState:
         return score
 
     # returns a list of tuples, where each tuple is a legal move
+    # gives them back order of a spiral starting from the center
     def getLegalActions(self, agentIndex):
         legal_actions = []
-        for row in xrange(self.size):
-            for col in xrange(self.size):
-                if self.board[row][col] == 0:
-                    legal_actions.append((row, col))
+        
+        spiral = []
+        # construct spiral CCW
+        start = (int(self.size / 2), int(self.size / 2))
+        spiral.append(start)
+        side_length = 1
+
+        while spiral[-1] != (0,0):
+            f = 1 if side_length % 2 == 1 else -1
+            for i in range(side_length):
+                spiral.append((spiral[-1][0]+f, spiral[-1][1]))
+            for j in range(side_length):
+                spiral.append((spiral[-1][0], spiral[-1][1]+f))
+            side_length+=1
+        for i in range(1, int(self.size)):
+            spiral.append((i, 0))
+
+        for row, col in spiral:
+            if self.board[row][col] == 0:
+                legal_actions.append((row, col))
         return legal_actions
+
+    # returns a list of tuples, where each tuple is a legal move
+    # def getLegalActions(self, agentIndex):
+    #     legal_actions = []
+    #     for row in xrange(self.size):
+    #         for col in xrange(self.size):
+    #             if self.board[row][col] == 0:
+    #                 legal_actions.append((row, col))
+    #     return legal_actions
 
     # returns a new ConnectFiveGameState given an action taken by some agentIndex
     def generateSuccessor(self, agentIndex, action):
