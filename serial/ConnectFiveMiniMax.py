@@ -400,6 +400,7 @@ class AlphaBetaAgent:
 if __name__ == '__main__':
     minimax_agent = MinimaxAgent(depth=1) #depth = 1
     alphabeta_agent = AlphaBetaAgent(depth=1)
+
     size = 15
 
     # construct spiral CCW
@@ -420,20 +421,40 @@ if __name__ == '__main__':
 
 
     clean_board = [x[:] for x in [[0]*size]*size]
-    clean_board[7][5] = -1
+    clean_board[3][10] = 1
+    clean_board[4][6] = 1
+    clean_board[4][7] = -1
+    clean_board[4][10] = -1
+    clean_board[5][6] = -1
+    clean_board[5][7] = 1
+    clean_board[5][8] = 1
+    clean_board[5][9] = 1
+    clean_board[5][10] = 1
+    clean_board[5][11] = -1
+    clean_board[6][6] = -1
+    clean_board[6][8] = -1
+    clean_board[6][9] = 1
+    clean_board[7][6] = -1
     clean_board[8][6] = -1
-    clean_board[9][7] = -1
+    clean_board[9][6] = 1
 
     # for row in clean_board:
     #     print row    
     #print clean_board
     first = {}
-    first[0] = 0 
-    first[1] = 0
-    first[2] = 1
+    first[0] = 2
+    first[1] = 4
+    first[2] = 0
     first[3] = 0
     first[4] = 0
-    gameState = ConnectFiveGameState(clean_board, -1, secondPlayerHeuristic=first, \
+    second = {}
+    second[0] = 2  
+    second[1] = 1
+    second[2] = 0
+    second[3] = 0
+    second[4] = 1
+
+    gameState = ConnectFiveGameState(clean_board, -1, firstPlayerHeuristic=first, secondPlayerHeuristic=second, \
         lastMovePlayed=(7,7), moveOrdering=spiral)
     #print minimax_agent.getAction(gameState, -1)
     print alphabeta_agent.getAction(gameState, -1)
