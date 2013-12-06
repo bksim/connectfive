@@ -1,4 +1,24 @@
 import copy
+# depth = n, 
+# ply = 2n+1
+# if you count your own move as a ply
+# if not, then ply = 2n
+
+# with initial setup:
+
+# clean_board[7][5] = -1
+# clean_board[8][6] = -1
+# clean_board[9][7] = -1
+
+# depth=1
+# 8.8 seconds without alpha beta pruning
+# 0.2 seconds with alpha beta pruning, no ordering
+# 0.3 seconds with alpha beta pruning, spiral ordering
+
+# depth=2
+# ? without ab pruning
+# 392.3 seconds with alpha beta pruning, no ordering
+# 79.9 seconds with alpha beta pruning, spiral ordering
 
 class ConnectFiveGameState:
     def __init__(self, board, currentTurn, firstPlayerHeuristic={}, secondPlayerHeuristic={}, lastMovePlayed=None, moveOrdering=None):
@@ -21,7 +41,14 @@ class ConnectFiveGameState:
         	self.secondPlayerHeuristic[2] = 0
         	self.secondPlayerHeuristic[3] = 0
         	self.secondPlayerHeuristic[4] = 0
+        
         self.moveOrdering = moveOrdering # determines order which getLegalActions will return actions
+        if not self.moveOrdering:
+            # default is just top left to bottom right row by row
+            self.moveOrdering = []
+            for row in range(self.size):
+                for col in range(self.size):
+                    self.moveOrdering.append((row, col))
 
     def isOver(self):
         # Check if either player has a 5 in a row or greater
@@ -228,7 +255,6 @@ class ConnectFiveGameState:
     # gives them back order of a spiral starting from the center
     def getLegalActions(self, agentIndex):
         legal_actions = []
-
         for row, col in self.moveOrdering:
             if self.board[row][col] == 0:
                 legal_actions.append((row, col))
@@ -373,7 +399,7 @@ class AlphaBetaAgent:
 
 if __name__ == '__main__':
     minimax_agent = MinimaxAgent(depth=1) #depth = 1
-    alphabeta_agent = AlphaBetaAgent(depth=1)
+    alphabeta_agent = AlphaBetaAgent(depth=2)
     size = 15
 
     # construct spiral CCW
@@ -397,7 +423,9 @@ if __name__ == '__main__':
     clean_board[7][5] = -1
     clean_board[8][6] = -1
     clean_board[9][7] = -1
-    
+
+    # for row in clean_board:
+    #     print row    
     #print clean_board
     first = {}
     first[0] = 0 
@@ -405,6 +433,7 @@ if __name__ == '__main__':
     first[2] = 1
     first[3] = 0
     first[4] = 0
-    gameState = ConnectFiveGameState(clean_board, -1, secondPlayerHeuristic=first, lastMovePlayed=(7,7), moveOrdering=spiral)
+    gameState = ConnectFiveGameState(clean_board, -1, secondPlayerHeuristic=first, \
+        lastMovePlayed=(7,7), moveOrdering=spiral)
     #print minimax_agent.getAction(gameState, -1)
     print alphabeta_agent.getAction(gameState, -1)
