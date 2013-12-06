@@ -70,10 +70,10 @@ class ConnectFiveGameState:
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] - offset < 0:
                 break
-                if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1]] == self.currentTurn:
-                        upperChain += 1
-                else:
-                        break
+            if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1]] == self.currentTurn:
+                     upperChain += 1
+            else:
+                break
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] + offset >= self.size:
                 break
@@ -398,8 +398,9 @@ class AlphaBetaAgent:
         return current_best_action
 
 if __name__ == '__main__':
-    minimax_agent = MinimaxAgent(depth=5) #depth = 1
-    alphabeta_agent = AlphaBetaAgent(depth=5)
+    minimax_agent = MinimaxAgent(depth=1) #depth = 1
+    alphabeta_agent = AlphaBetaAgent(depth=1)
+
     size = 15
 
     # construct spiral CCW
