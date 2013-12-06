@@ -1,16 +1,18 @@
 from ConnectFiveMiniMax import ConnectFiveGameState
 from ConnectFiveMiniMax import AlphaBetaAgent
+from Tkinter import *
+import copy
 
 class ConnectFiveGraphics():
-    def __init__(self):
+    def __init__(self, gameState, activateAI=False):
     	## game parameters
-    	self.size = 15
+    	self.gameState = gameState
+    	self.activateAI = activateAI
+    	self.size = gameState.size
+
     	self.gridSize = 40 #pixels
     	self.width = (self.size+1)*self.gridSize
     	self.height = (self.size+1)*self.gridSize
-
-    	## game initialization
-    	self.board = ConnectFiveBoard(self.size)
     	
     	## graphics components initialization
     	self.root = Tk()
@@ -33,21 +35,63 @@ class ConnectFiveGraphics():
     	#print "clicked at", event.x, event.y
     	x = int(round(event.y / float(self.gridSize)) - 1)
     	y = int(round(event.x / float(self.gridSize)) - 1)
-    	#print "move: ", str(x), str(y)
+    	print "move: ", str(x), str(y)
 
-    	legal = self.board.playMove(x, y)
-    	if legal:
-    		#print self.board
-    		self.player.set("To move: " + self.board.getCurrentPlayerColor())
-	    	r = 20
-	    	drawX = (x+1)*40
-	    	drawY = (y+1)*40
-	    	self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, fill=('white' if self.board.getCurrentPlayerColor() == 'black' else 'black'))
-	    	if legal == 'black' or legal == 'white':
-	    		print "GAME OVER: WINNER IS " + legal
-    			self.player.set("GAME OVER: WINNER IS " + legal)
-    			#self.root.destroy()
+    	currentTurn = self.gameState.currentTurn
+    	# if legal
+    	if (x, y) in self.gameState.getLegalActions(currentTurn):
+    		self.gameState = self.gameState.generateSuccessor(currentTurn, (x, y))
+    		# game over
+    		if self.gameState.isOver():
+    			print "GAME OVER"
+    			self.player.set("GAME OVER")
+    		currentColorString = 'black' if currentTurn == -1 else 'white'
+    		self.player.set("To move: " + currentColorString)
+    		r = 20
+    		drawX = (x+1)*40
+    		drawY = (y+1)*40
+    		self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, \
+    			fill=('white' if currentTurn == -1 else 'black'))
+
+    		# make an AI agent
+    		alphabeta_agent = AlphaBetaAgent(depth=1)
+    		# get ai's move
+    		ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
+    		print "AI WOULD NOW PLAY: " + str(ai_move)
+    		# play ai's move for it if necessary
+    		if self.activateAI:
+    			currentTurnAI = self.gameState.currentTurn
+    			self.gameState = self.gameState.generateSuccessor(currentTurnAI, ai_move)
+    			if self.gameState.isOver():
+    				print "GAME OVER"
+    				self.player.set("GAME OVER")
+    			currentColorString = 'black' if currentTurnAI == -1 else 'white'
+    			self.player.set("To move: " + currentColorString)
+    			r = 20
+    			drawX = (ai_move[0]+1)*40
+    			drawY = (ai_move[1]+1)*40
+    			self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, \
+    				fill=('white' if currentTurnAI == -1 else 'black'))
 
 if __name__ == '__main__':
-	print("Welcome to Connect 5!")
-	boardGraphics = ConnectFiveGraphics()
+    print("Welcome to Connect 5!")
+    size = 15
+    clean_board = [x[:] for x in [[0]*size]*size]
+    spiral = []
+    start = (int(size / 2), int(size / 2))
+    spiral.append(start)
+    side_length = 1
+    
+    while spiral[-1] != (0,0):
+    	f = 1 if side_length % 2 == 1 else -1
+	for i in range(side_length):
+	    spiral.append((spiral[-1][0]+f, spiral[-1][1]))
+	for j in range(side_length):
+	    spiral.append((spiral[-1][0], spiral[-1][1]+f))
+        side_length+=1
+    for i in range(1, int(size)):
+    	spiral.append((i, 0))
+	
+    gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
+    
+    boardGraphics = ConnectFiveGraphics(gameState, activateAI=True)
