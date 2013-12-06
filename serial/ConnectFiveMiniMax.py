@@ -30,17 +30,17 @@ class ConnectFiveGameState:
         self.lastMovePlayed = lastMovePlayed
 
         if self.firstPlayerHeuristic == {}:
-        	self.firstPlayerHeuristic[0] = 0
-        	self.firstPlayerHeuristic[1] = 0
-        	self.firstPlayerHeuristic[2] = 0
-        	self.firstPlayerHeuristic[3] = 0
-        	self.firstPlayerHeuristic[4] = 0
+                self.firstPlayerHeuristic[0] = 0
+                self.firstPlayerHeuristic[1] = 0
+                self.firstPlayerHeuristic[2] = 0
+                self.firstPlayerHeuristic[3] = 0
+                self.firstPlayerHeuristic[4] = 0
         if self.secondPlayerHeuristic == {}:
-        	self.secondPlayerHeuristic[0] = 0
-        	self.secondPlayerHeuristic[1] = 0
-        	self.secondPlayerHeuristic[2] = 0
-        	self.secondPlayerHeuristic[3] = 0
-        	self.secondPlayerHeuristic[4] = 0
+                self.secondPlayerHeuristic[0] = 0
+                self.secondPlayerHeuristic[1] = 0
+                self.secondPlayerHeuristic[2] = 0
+                self.secondPlayerHeuristic[3] = 0
+                self.secondPlayerHeuristic[4] = 0
         
         self.moveOrdering = moveOrdering # determines order which getLegalActions will return actions
         if not self.moveOrdering:
@@ -70,10 +70,10 @@ class ConnectFiveGameState:
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] - offset < 0:
                 break
-        	if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1]] == self.currentTurn:
-        		upperChain += 1
-        	else:
-        		break
+            if self.board[self.lastMovePlayed[0] - offset][self.lastMovePlayed[1]] == self.currentTurn:
+                     upperChain += 1
+            else:
+                break
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] + offset >= self.size:
                 break
