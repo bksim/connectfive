@@ -1,7 +1,7 @@
 import copy
 
 class ConnectFiveGameState:
-    def __init__(self, board, currentTurn, firstPlayerHeuristic={}, secondPlayerHeuristic={}, lastMovePlayed=None):
+    def __init__(self, board, currentTurn, firstPlayerHeuristic={}, secondPlayerHeuristic={}, lastMovePlayed=None, moveOrdering=None):
         self.currentTurn = currentTurn
         self.board = board
         self.size = len(board)
@@ -21,6 +21,7 @@ class ConnectFiveGameState:
         	self.secondPlayerHeuristic[2] = 0
         	self.secondPlayerHeuristic[3] = 0
         	self.secondPlayerHeuristic[4] = 0
+        self.moveOrdering = moveOrdering # determines order which getLegalActions will return actions
 
     def isOver(self):
         # Check if either player has a 5 in a row or greater
@@ -227,24 +228,8 @@ class ConnectFiveGameState:
     # gives them back order of a spiral starting from the center
     def getLegalActions(self, agentIndex):
         legal_actions = []
-        
-        spiral = []
-        # construct spiral CCW
-        start = (int(self.size / 2), int(self.size / 2))
-        spiral.append(start)
-        side_length = 1
 
-        while spiral[-1] != (0,0):
-            f = 1 if side_length % 2 == 1 else -1
-            for i in range(side_length):
-                spiral.append((spiral[-1][0]+f, spiral[-1][1]))
-            for j in range(side_length):
-                spiral.append((spiral[-1][0], spiral[-1][1]+f))
-            side_length+=1
-        for i in range(1, int(self.size)):
-            spiral.append((i, 0))
-
-        for row, col in spiral:
+        for row, col in self.moveOrdering:
             if self.board[row][col] == 0:
                 legal_actions.append((row, col))
         return legal_actions
@@ -264,7 +249,7 @@ class ConnectFiveGameState:
         new_board[action[0]][action[1]] = agentIndex
         successor = ConnectFiveGameState(new_board, agentIndex, 
             copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
-            action)
+            action, self.moveOrdering)
         successor.updateXinARowHeuristic()
         successor.currentTurn = -successor.currentTurn
 
@@ -278,7 +263,7 @@ class ConnectFiveGameState:
     def getNumInARow(self):
         return self.firstPlayerHeuristic if self.currentTurn == 1 else self.secondPlayerHeuristic
 
-# minimax agent
+""" MINIMAX AGENT """
 class MinimaxAgent:
     def __init__(self, depth=1):
         # fill in stuff here
@@ -326,11 +311,88 @@ class MinimaxAgent:
                 current_best_score = newScore
         return current_best_action
 
+""" MINIMAX AGENT WITH ALPHA/BETA PRUNING """
+class AlphaBetaAgent:
+    def __init__(self, depth=1):
+        # fill in stuff here
+        self.depth = depth
 
+    # terminal test
+    def is_terminal(self, gameState):
+        return gameState.isOver()
+
+    def evaluationFunction(self, gameState):
+        # come up with a heuristic here to evaluate how good a board is
+        return gameState.calcXinARowScore()
+
+    def maxValue(self, gameState, agentIndex, depth, alpha, beta):
+        if depth == 0 or self.is_terminal(gameState):
+            return self.evaluationFunction(gameState)
+
+        v = float("-inf")
+        actions = gameState.getLegalActions(agentIndex)
+        # calculate for each action all possible new game states
+        for action in actions:
+            v = max(v, self.minValue(gameState.generateSuccessor(agentIndex, action), \
+                -agentIndex, depth, alpha, beta))
+            if v >= beta:
+                return v
+            alpha = max(alpha, v)
+        return v
+
+    def minValue(self, gameState, agentIndex, depth, alpha, beta):
+        if depth == 0 or self.is_terminal(gameState):
+            return self.evaluationFunction(gameState)
+
+        v = float("inf")
+        actions = gameState.getLegalActions(gameState)
+        for action in actions:
+            v = min(v, self.maxValue(gameState.generateSuccessor(agentIndex, action), \
+                -agentIndex, depth-1, alpha, beta))
+            if v <= alpha:
+                return v
+            beta = min(beta, v)
+        return v
+
+    def getAction(self, gameState, agentIndex):
+        current_best_action = None
+        current_best_score = float("-inf")
+        alpha = float("-inf")
+        beta = float("inf")
+        actions = gameState.getLegalActions(agentIndex)
+        for action in actions:
+            newScore = self.minValue(gameState.generateSuccessor(agentIndex, action), \
+                -agentIndex, self.depth, alpha, beta)
+            if newScore > current_best_score:
+                current_best_action = action
+                current_best_score = newScore
+            if current_best_score >= beta:
+                return current_best_action
+            alpha = max(alpha, current_best_score)
+        return current_best_action
 
 if __name__ == '__main__':
     minimax_agent = MinimaxAgent(depth=1) #depth = 1
+    alphabeta_agent = AlphaBetaAgent(depth=1)
     size = 15
+
+    # construct spiral CCW
+    spiral = []
+    start = (int(size / 2), int(size / 2))
+    spiral.append(start)
+    side_length = 1
+
+    while spiral[-1] != (0,0):
+        f = 1 if side_length % 2 == 1 else -1
+        for i in range(side_length):
+            spiral.append((spiral[-1][0]+f, spiral[-1][1]))
+        for j in range(side_length):
+            spiral.append((spiral[-1][0], spiral[-1][1]+f))
+        side_length+=1
+    for i in range(1, int(size)):
+        spiral.append((i, 0))
+
+
     clean_board = [x[:] for x in [[0]*size]*size]
     clean_board[7][5] = -1
     clean_board[8][6] = -1
@@ -343,5 +405,6 @@ if __name__ == '__main__':
     first[2] = 1
     first[3] = 0
     first[4] = 0
-    gameState = ConnectFiveGameState(clean_board, -1, secondPlayerHeuristic=first, lastMovePlayed=(7,7))
-    print minimax_agent.getAction(gameState, -1)
+    gameState = ConnectFiveGameState(clean_board, -1, secondPlayerHeuristic=first, lastMovePlayed=(7,7), moveOrdering=spiral)
+    #print minimax_agent.getAction(gameState, -1)
+    print alphabeta_agent.getAction(gameState, -1)
