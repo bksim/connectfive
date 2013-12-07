@@ -78,7 +78,12 @@ class ConnectFiveGameState:
         surrounding.append((x+1, y))
         surrounding.append((x+1, y+1))
         surrounding = [(x, y) for (x, y) in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
+<<<<<<< HEAD
         return sum([self.board[s[0]][s[1]] == self.board[pair[0]][pair[1]] for s in surrounding]) 
+=======
+
+        return sum([self.board[s] == self.board[pair] for s in surrounding]) 
+>>>>>>> 2595741fc2760d846027a088dbbc088be4934090
 
     # counter of X-in-a-row heursitic
     '''Does not do 1 below properly, also starts at -1 for 1 piece....'''
