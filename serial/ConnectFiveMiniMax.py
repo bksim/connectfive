@@ -65,30 +65,28 @@ class ConnectFiveGameState:
                 return -1
             else:
                 return False
-                
+
+    def isolatedCount(self, pair):
+        surrounding = []
+        x, y = pair[0], pair[1]
+        surrounding.append((x-1, y-1))
+        surrounding.append((x-1, y))
+        surrounding.append((x-1, y+1))
+        surrounding.append((x, y-1))
+        surrounding.append((x, y+1))
+        surrounding.append((x+1, y-1))
+        surrounding.append((x+1, y))
+        surrounding.append((x+1, y+1))
+        surrounding = [(x, y) for (x, y) in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
+
+        return sum([s == pair for s in surrounding]) 
+
     # counter of X-in-a-row heursitic
     '''Does not do 1 below properly, also starts at -1 for 1 piece....'''
     def updateXinARowHeuristic(self):
         # for each type of search, ex: vertical, count how many are the same piece and directly above and below - subtract from those values in the heuristic and add to the value of upper+lower+1
 
-
-
-        def isolatedCount(self, pair):
-            surrounding = []
-            x, y = pair[0], pair[1]
-            surrounding.append((x-1, y-1))
-            surrounding.append((x-1, y))
-            surrounding.append((x-1, y+1))
-            surrounding.append((x, y-1))
-            surrounding.append((x, y+1))
-            surrounding.append((x+1, y-1))
-            surrounding.append((x+1, y))
-            surrounding.append((x+1, y+1))
-            surrounding = [x, y in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
-
-            return sum([s == pair for s in surrounding]) 
-
-        if isolatedCount(self.lastMovePlayed) == 0
+        if self.isolatedCount(self.lastMovePlayed) == 0:
             if self.currentTurn == 1:
                 self.firstPlayerHeuristic[0] += 1
             else:
@@ -115,9 +113,9 @@ class ConnectFiveGameState:
                 break
                 
         if self.currentTurn == 1:
-            if upperChain > 1 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1]]) == 1:
+            if upperChain > 1 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1]]) == 1):
                 self.firstPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 1 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1]]) == 1:
+            if lowerChain > 1 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1]]) == 1):
                 self.firstPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.firstPlayerHeuristic[4] += 1
@@ -125,9 +123,9 @@ class ConnectFiveGameState:
                 self.firstPlayerHeuristic[upperChain + lowerChain] += 1
 
         else:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1]]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1]]) == 1):
                 self.secondPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1]]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1]]) == 1):
                 self.secondPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.secondPlayerHeuristic[4] += 1
@@ -153,9 +151,9 @@ class ConnectFiveGameState:
             else:
                 break
         if self.currentTurn == 1:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] - 1]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] - 1]) == 1):
                 self.firstPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] + 1]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] + 1]) == 1):
                 self.firstPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.firstPlayerHeuristic[4] += 1
@@ -163,9 +161,9 @@ class ConnectFiveGameState:
                 self.firstPlayerHeuristic[upperChain + lowerChain] += 1
 
         else:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] - 1]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] - 1]) == 1):
                 self.secondPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] + 1]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0], self.lastMovePlayed[1] + 1]) == 1):
                 self.secondPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.secondPlayerHeuristic[4] += 1
@@ -192,9 +190,9 @@ class ConnectFiveGameState:
             else:
                 break
         if self.currentTurn == 1:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] - 1]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] - 1]) == 1):
                 self.firstPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] + 1]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] + 1]) == 1):
                 self.firstPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.firstPlayerHeuristic[4] += 1
@@ -202,9 +200,9 @@ class ConnectFiveGameState:
                 self.firstPlayerHeuristic[upperChain + lowerChain] += 1
 
         else:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] - 1]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] - 1]) == 1):
                 self.secondPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] + 1]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] + 1]) == 1):
                 self.secondPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.secondPlayerHeuristic[4] += 1
@@ -230,9 +228,9 @@ class ConnectFiveGameState:
             else:
                 break
         if self.currentTurn == 1:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] + 1]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] + 1]) == 1):
                 self.firstPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] - 1]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] - 1]) == 1):
                 self.firstPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.firstPlayerHeuristic[4] += 1
@@ -241,9 +239,9 @@ class ConnectFiveGameState:
             else: 
                 isolatedCheck += 1
         else:
-            if upperChain > 0 or (upperChain == 1 and isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] + 1]) == 1:
+            if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] + 1]) == 1):
                 self.secondPlayerHeuristic[upperChain-1] -= 1
-            if lowerChain > 0 or (lowerChain == 1 and isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] - 1]) == 1:
+            if lowerChain > 0 or (lowerChain == 1 and self.isolatedCount([self.lastMovePlayed[0] + 1, self.lastMovePlayed[1] - 1]) == 1):
                 self.secondPlayerHeuristic[lowerChain-1] -= 1
             if upperChain + lowerChain > 4:
                 self.secondPlayerHeuristic[4] += 1
@@ -255,13 +253,12 @@ class ConnectFiveGameState:
     # convert heursitic data to a weighted score
     def calcXinARowScore(self):
         #ADJUSTABLE SCORE WEIGHTINGS
-        scoreWeights = [1,5,25,1000000,float('inf')]
+        scoreWeights = [1,5,25,100000,999999999]
 
         p1score = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
         p2score = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
         
         score = p2score - p1score
-
         print "score: " + str(score)
         return score
 
