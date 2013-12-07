@@ -1,6 +1,7 @@
 from ConnectFiveMiniMax import ConnectFiveGameState
 from ConnectFiveMiniMax import AlphaBetaAgent
 from Tkinter import *
+from mpi4py import MPI
 import copy
 
 class ConnectFiveGraphics():
@@ -89,9 +90,27 @@ def parallelEvaluation(moveOrdering, comm, p_root=0):
     bestMove = #
     bestScore = # 
 
+
+    '''The above is not necessary, just kept for sake of github merging, proper edits should be for move and score below'''
+    move =
+    score = 
+
     # Reduce the partial results to the root process via MaxLoc which is a max or a value 1, paired with a value 2
-    finalMove, finalScore = comm.reduce(score, bestMove, op=MPI.MAXLOC, root=p_root)
-    return result
+
+    maxScore, rankMax = comm.allreduce(score, op=MPI.MAXLOC)
+
+    if rank == p_root:
+        if rankMax == p_root:
+            maxMove = move
+        else:
+            maxMove = comm.recv(source=rankMax)
+    elif rank == rankMax:
+        comm.send(move, dest=p_root)
+
+    if rank == p_root:
+        return maxMove, maxScore
+    else:
+        return None, None
 
 def getStart(numtasks, size, rank):
   # Offset by rank to account for n+1 spaces
