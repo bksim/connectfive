@@ -78,12 +78,7 @@ class ConnectFiveGameState:
         surrounding.append((x+1, y))
         surrounding.append((x+1, y+1))
         surrounding = [(x, y) for (x, y) in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
-<<<<<<< HEAD
         return sum([self.board[s[0]][s[1]] == self.board[pair[0]][pair[1]] for s in surrounding]) 
-=======
-
-        return sum([self.board[s] == self.board[pair] for s in surrounding]) 
->>>>>>> 2595741fc2760d846027a088dbbc088be4934090
 
     # counter of X-in-a-row heursitic
     '''Does not do 1 below properly, also starts at -1 for 1 piece....'''
@@ -256,10 +251,11 @@ class ConnectFiveGameState:
     # convert heursitic data to a weighted score
     def calcXinARowScore(self):
         #ADJUSTABLE SCORE WEIGHTINGS
-        scoreWeights = [1,5,25,100000,999999999]
+        offensiveWeights = [1,5,25,100000,999999999]
+        defensiveWeights = [1,5,1000,1000000,99999999]
 
-        p1score = sum([self.firstPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
-        p2score = sum([self.secondPlayerHeuristic[i] * scoreWeights[i] for i in range(len(scoreWeights))])
+        p1score = sum([self.firstPlayerHeuristic[i] * defensiveWeights[i] for i in range(len(defensiveWeights))])
+        p2score = sum([self.secondPlayerHeuristic[i] * offensiveWeights[i] for i in range(len(offensiveWeights))])
         
         score = p2score - p1score
         print "score: " + str(score)
