@@ -69,7 +69,20 @@ class ConnectFiveGraphics():
         self.player.set("To move: " + toMoveString)
         self.drawMove(action, currentTurn)
 
-def parallelEvaluation(moveOrdering, comm, p_root=0):
+""" A naive parallel AlphaBeta algorithm. Simply splits branches of the minimax tree to
+    various processors, and has each one run the serial minimax with alpha-beta pruning
+    on each branch. 
+
+    args
+    gameState: current state of the game to call the method on.
+    agentIndex: agentIndex of the player to get the best move for.
+    moveOrdering: a move ordering, such as top left to bottom right or spiral.
+    comm, p_root: MPI stuff
+
+    The first two arguments are analogous and should be used in the same way as when the
+    serial function getAction is called.
+"""
+def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
     # Get MPI Data
     rank = comm.Get_rank()
@@ -85,17 +98,25 @@ def parallelEvaluation(moveOrdering, comm, p_root=0):
     start = getStart(numtasks, size, rank)
     end = getStart(numtasks, size, rank + 1)
 
-    '''TODO: Run the AlphaBeta agent with mymoves to get the best move and its corresponding score'''
-    ''' where the move orders per processor are moveOrdering[start:end]'''
-    alphabeta_agent = AlphaBetaAgent(depth=1)
-    ai_move = alphabeta_agent.getAction(...???)
-    bestMove = 
-    bestScore = # 
+    current_best_score = float("-inf")
+    current_best_action = None
+    alpha = float("-inf")
+    beta = float("-inf")
+    agent = AlphaBetaAgent(depth=1)
+    for action in spiral[start:end]:
+        newScore = agent.minValue(gameState.generateSuccessor(agentIndex, action), \
+            -agentIndex, self.depth, alpha, beta)
 
+        if newScore > current_best_score:
+            current_best_score = newScore
+            current_best_action = action
 
-    '''The above is not necessary, just kept for sake of github merging, proper edits should be for move and score below'''
-    move =
-    score = 
+        if current_best_score >= beta:
+            return current_best_action
+        alpha = max(alpha, current_best_score)
+   
+    move = current_best_action
+    score = current_best_score
 
     # Reduce the partial results to the root process via MaxLoc which is a max or a value 1, paired with a value 2
 
