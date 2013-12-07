@@ -86,7 +86,9 @@ def parallelEvaluation(moveOrdering, comm, p_root=0):
 
     '''TODO: Run the AlphaBeta agent with mymoves to get the best move and its corresponding score'''
     ''' where the move orders per processor are moveOrdering[start:end]'''
-    bestMove = #
+    alphabeta_agent = AlphaBetaAgent(depth=1)
+    ai_move = alphabeta_agent.getAction(...???)
+    bestMove = 
     bestScore = # 
 
     # Reduce the partial results to the root process via MaxLoc which is a max or a value 1, paired with a value 2
