@@ -78,8 +78,7 @@ class ConnectFiveGameState:
         surrounding.append((x+1, y))
         surrounding.append((x+1, y+1))
         surrounding = [(x, y) for (x, y) in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
-
-        return sum([s == pair for s in surrounding]) 
+        return sum([self.board[s[0]][s[1]] == self.board[pair[0]][pair[1]] for s in surrounding]) 
 
     # counter of X-in-a-row heursitic
     '''Does not do 1 below properly, also starts at -1 for 1 piece....'''
@@ -87,6 +86,7 @@ class ConnectFiveGameState:
         # for each type of search, ex: vertical, count how many are the same piece and directly above and below - subtract from those values in the heuristic and add to the value of upper+lower+1
 
         if self.isolatedCount(self.lastMovePlayed) == 0:
+            print self.isolatedCount(self.lastMovePlayed)
             if self.currentTurn == 1:
                 self.firstPlayerHeuristic[0] += 1
             else:
@@ -236,8 +236,6 @@ class ConnectFiveGameState:
                 self.firstPlayerHeuristic[4] += 1
             elif upperChain + lowerChain > 0:
                 self.firstPlayerHeuristic[upperChain + lowerChain] += 1
-            else: 
-                isolatedCheck += 1
         else:
             if upperChain > 0 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1] + 1]) == 1):
                 self.secondPlayerHeuristic[upperChain-1] -= 1
