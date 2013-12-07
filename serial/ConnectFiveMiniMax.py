@@ -86,7 +86,7 @@ class ConnectFiveGameState:
         # for each type of search, ex: vertical, count how many are the same piece and directly above and below - subtract from those values in the heuristic and add to the value of upper+lower+1
 
         if self.isolatedCount(self.lastMovePlayed) == 0:
-            print self.isolatedCount(self.lastMovePlayed)
+            #print self.isolatedCount(self.lastMovePlayed)
             if self.currentTurn == 1:
                 self.firstPlayerHeuristic[0] += 1
             else:
@@ -251,14 +251,15 @@ class ConnectFiveGameState:
     # convert heursitic data to a weighted score
     def calcXinARowScore(self):
         #ADJUSTABLE SCORE WEIGHTINGS
-        offensiveWeights = [1,5,25,100000,999999999]
-        defensiveWeights = [1,5,1000,1000000,99999999]
+        #offensiveWeights = [1,5,25,1e5,1e9]
+        offensiveWeights = [1, 2, 3, 4, 5]
+        defensiveWeights = [1,100,10000,1e6,1e10]
 
         p1score = sum([self.firstPlayerHeuristic[i] * defensiveWeights[i] for i in range(len(defensiveWeights))])
         p2score = sum([self.secondPlayerHeuristic[i] * offensiveWeights[i] for i in range(len(offensiveWeights))])
         
         score = p2score - p1score
-        print "score: " + str(score)
+        #print "score: " + str(score)
         return score
 
     # returns a list of tuples, where each tuple is a legal move
@@ -289,9 +290,9 @@ class ConnectFiveGameState:
         successor.updateXinARowHeuristic()
         successor.currentTurn = -successor.currentTurn
 
-        print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed) + "  TURN: " + str(-successor.currentTurn)
-        print successor.firstPlayerHeuristic
-        print successor.secondPlayerHeuristic
+        #print "GENERATESUCCESSOR:  " + str(successor.lastMovePlayed) + "  TURN: " + str(-successor.currentTurn)
+        #print successor.firstPlayerHeuristic
+        #print successor.secondPlayerHeuristic
         return successor
 
     # returns a dict with keys being the number in a row and values being how many of those
