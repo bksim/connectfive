@@ -74,8 +74,19 @@ class ConnectFiveGameState:
 
 
         def isolatedCount(self, pair):
-            count = 0
-            if 
+            surrounding = []
+            x, y = pair[0], pair[1]
+            surrounding.append((x-1, y-1))
+            surrounding.append((x-1, y))
+            surrounding.append((x-1, y+1))
+            surrounding.append((x, y-1))
+            surrounding.append((x, y+1))
+            surrounding.append((x+1, y-1))
+            surrounding.append((x+1, y))
+            surrounding.append((x+1, y+1))
+            surrounding = [x, y in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
+
+            return sum([s == pair for s in surrounding]) 
 
         if isolatedCount(self.lastMovePlayed) == 0
             if self.currentTurn == 1:
