@@ -40,20 +40,19 @@ class ConnectFiveGraphics():
     	currentTurn = self.gameState.currentTurn
     	# if legal
     	if (x, y) in self.gameState.getLegalActions(currentTurn):
-    		self.playMove((x, y))
-    		
-    		# make an AI agent
-    		alphabeta_agent = AlphaBetaAgent(depth=1)
-    		# get ai's move
-    		ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
-    		print "AI WOULD NOW PLAY: " + str(ai_move)
-    		# play ai's move for it if necessary
-    		if self.activateAI:
-    			self.playMove(ai_move)
+            self.playMove((x, y))
+
+            # make an AI agent
+            alphabeta_agent = AlphaBetaAgent(depth=1)
+            # get ai's move
+            ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
+            print "AI WOULD NOW PLAY: " + str(ai_move)
+            # play ai's move for it if necessary
+            if self.activateAI:
+                self.playMove(ai_move)
 
     def drawMove(self, action, currentTurn):
     	r = 20
-    	print "HERE"
     	drawX = (action[0]+1)*40
     	drawY = (action[1]+1)*40
     	self.w.create_oval(drawY-r, drawX-r, drawY+r, drawX+r, fill=('white' if currentTurn == -1 else 'black'))
