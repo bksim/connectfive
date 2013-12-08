@@ -94,8 +94,6 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    print "rank" + str(rank)
-
     # Broadcast info
     gameState = comm.bcast(gameState, root=p_root)
     agentIndex = comm.bcast(agentIndex, root=p_root)
@@ -113,10 +111,11 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     current_best_action = None
     alpha = float("-inf")
     beta = float("inf")
-    agent = AlphaBetaAgent(depth=1)
+
+    # CHANGE DEPTH
+    agent = AlphaBetaAgent(depth=2)
 
     for action in moveOrdering[start:end]:
-        print action
         if gameState.board[action[0]][action[1]] != 0:
             continue
         newScore = agent.minValue(gameState.generateSuccessor(agentIndex, action), \
@@ -191,6 +190,6 @@ if __name__ == '__main__':
         gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
 
         boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
-
     else:
-        parallelAlphaBeta(None, None, None, comm, 0)
+        while True:
+            parallelAlphaBeta(None, None, None, comm, 0)
