@@ -5,7 +5,7 @@ from mpi4py import MPI
 import copy
 
 class ConnectFiveGraphics():
-    def __init__(self, gameState, activateAI=False):
+    def __init__(self, gameState, comm, activateAI=False):
     	## game parameters
     	self.gameState = gameState
     	self.activateAI = activateAI
@@ -15,6 +15,8 @@ class ConnectFiveGraphics():
     	self.width = (self.size+1)*self.gridSize
     	self.height = (self.size+1)*self.gridSize
     	
+        self.comm = comm
+
     	## graphics components initialization
     	self.root = Tk()
     	self.frame = Frame(self.root)
@@ -44,9 +46,13 @@ class ConnectFiveGraphics():
             self.playMove((x, y))
 
             # make an AI agent
-            alphabeta_agent = AlphaBetaAgent(depth=1)
+            #alphabeta_agent = AlphaBetaAgent(depth=1)
             # get ai's move
-            ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
+            #ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
+
+            # ideally we'd have something like this
+            ai_move, score = parallelAlphaBeta(copy.deepcopy(self.gameState), -1, self.gameState.moveOrdering, self.comm, 0)
+
             print "AI WOULD NOW PLAY: " + str(ai_move)
             # play ai's move for it if necessary
             if self.activateAI:
@@ -103,6 +109,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     alpha = float("-inf")
     beta = float("-inf")
     agent = AlphaBetaAgent(depth=1)
+    
     for action in spiral[start:end]:
         newScore = agent.minValue(gameState.generateSuccessor(agentIndex, action), \
             -agentIndex, self.depth, alpha, beta)
@@ -171,4 +178,4 @@ if __name__ == '__main__':
         	spiral.append((i, 0))
 	
         gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
-        boardGraphics = ConnectFiveGraphics(gameState, activateAI=True)
+        boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
