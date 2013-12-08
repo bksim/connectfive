@@ -2,6 +2,7 @@ from ConnectFiveMiniMax import ConnectFiveGameState
 from ConnectFiveMiniMax import AlphaBetaAgent
 from Tkinter import *
 import copy
+import time
 
 class ConnectFiveGraphics():
     def __init__(self, gameState, activateAI=False):
@@ -13,6 +14,9 @@ class ConnectFiveGraphics():
     	self.gridSize = 40 #pixels
     	self.width = (self.size+1)*self.gridSize
     	self.height = (self.size+1)*self.gridSize
+
+        # add turn timer/default time
+        self.time = time.time()
     	
     	## graphics components initialization
     	self.root = Tk()
@@ -33,6 +37,8 @@ class ConnectFiveGraphics():
 
     def mouseClicked(self, event):
     	#print "clicked at", event.x, event.y
+
+        self.time = time.time()
     	x = int(round(event.y / float(self.gridSize)) - 1)
     	y = int(round(event.x / float(self.gridSize)) - 1)
     	print "move: ", str(x), str(y)
@@ -47,6 +53,7 @@ class ConnectFiveGraphics():
             # get ai's move
             ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
             print "AI WOULD NOW PLAY: " + str(ai_move)
+            print "Time: " + str(time.time() - self.time)
             # play ai's move for it if necessary
             if self.activateAI:
                 self.playMove(ai_move)
