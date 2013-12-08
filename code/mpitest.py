@@ -44,8 +44,18 @@ def parallelEvaluation(moveOrdering, comm, p_root=0):
     elif rank == rankMax:
 	    comm.send(score, dest=p_root)
 
+    if rank % 2 == 0:
+        alpha = 2*rank
+        beta = 1/*rank
+    else:
+        alpha = -2*rank
+        beta = -1/rank
+
+    alpha = comm.reduce(alpha, op=MPI.MAX)
+    beta = comm.reduce(beta, op=MPI.MIN)
+
     if rank == p_root:
-        return maxMove, maxScore
+        return maxMove, maxScore, alpha, beta
     else:
         return None, None
 
@@ -72,8 +82,10 @@ if __name__ == '__main__':
 		data = None
 
 
-    [largestData, orderProcessed] = parallelEvaluation(data, comm, p_root=0)
+    [largestData, orderProcessed, alpha, beta] = parallelEvaluation(data, comm, p_root=0)
 
     if rank == 0:
         print largestData
         print orderProcessed
+        print alpha
+        print beta
