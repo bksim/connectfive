@@ -96,8 +96,11 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
     print "rank" + str(rank)
 
-    # Broadcast board
+    # Broadcast info
+    gameState = comm.bcast(gameState, root=p_root)
+    agentIndex = comm.bcast(agentIndex, root=p_root)
     moveOrdering = comm.bcast(moveOrdering, root=p_root)
+
 
     # Get length of moves needed
     numtasks = len(moveOrdering)
@@ -145,8 +148,8 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
         comm.send(move, dest=p_root)
 
     if rank == p_root:
-        print "move" + str(maxMove)
-        print "score" + str(maxScore)
+        #print "move" + str(maxMove)
+        #print "score" + str(maxScore)
         return (maxMove, maxScore)
     else:
         return (None, None)
@@ -188,3 +191,6 @@ if __name__ == '__main__':
         gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
 
         boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
+
+    else:
+        parallelAlphaBeta(None, None, None, comm, 0)
