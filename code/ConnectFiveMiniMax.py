@@ -252,8 +252,8 @@ class ConnectFiveGameState:
     def calcXinARowScore(self):
         #ADJUSTABLE SCORE WEIGHTINGS
         #offensiveWeights = [1,5,25,1e5,1e9]
-        offensiveWeights = [1, 2, 3, 4, 5]
-        defensiveWeights = [1,100,10000,1e6,1e10]
+        offensiveWeights = [1, 10, 25, 1000, 1e8]
+        defensiveWeights = [1,10,50,3000,1e9]
 
         p1score = sum([self.firstPlayerHeuristic[i] * defensiveWeights[i] for i in range(len(defensiveWeights))])
         p2score = sum([self.secondPlayerHeuristic[i] * offensiveWeights[i] for i in range(len(offensiveWeights))])

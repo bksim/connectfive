@@ -43,7 +43,7 @@ class ConnectFiveGraphics():
             self.playMove((x, y))
 
             # make an AI agent
-            alphabeta_agent = AlphaBetaAgent(depth=1)
+            alphabeta_agent = AlphaBetaAgent(depth=2)
             # get ai's move
             ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
             print "AI WOULD NOW PLAY: " + str(ai_move)
