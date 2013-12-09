@@ -375,7 +375,7 @@ class AlphaBetaAgent:
             if v >= beta:
                 return v
             alpha = max(alpha, v)
-            print "MAX VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
+            #print "MAX VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
 
         return v
 
