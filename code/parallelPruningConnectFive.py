@@ -123,7 +123,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     beta = float("inf")
 
     # CHANGE DEPTH
-    agent = AlphaBetaAgent(depth=2)
+    agent = AlphaBetaAgent(depth=1)
 
     for action in moveOrdering[start:end]:
         if gameState.board[action[0]][action[1]] != 0:
@@ -213,7 +213,7 @@ if __name__ == '__main__':
         for key in modified_spiral.keys():
             mod_spiral = mod_spiral + modified_spiral[key]
 
-        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=mod_spiral)
+        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
 
         boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
     else:
