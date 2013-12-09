@@ -45,7 +45,7 @@ class ConnectFiveGraphics():
         self.time = time.time()
     	x = int(round(event.y / float(self.gridSize)) - 1)
     	y = int(round(event.x / float(self.gridSize)) - 1)
-    	print "move: ", str(x), str(y)
+    	print "Player Move: ", str(x), str(y)
 
     	currentTurn = self.gameState.currentTurn
     	# if legal
@@ -102,6 +102,8 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    rankTime = time.time()
+
     # Broadcast info
     gameState = comm.bcast(gameState, root=p_root)
     agentIndex = comm.bcast(agentIndex, root=p_root)
@@ -153,6 +155,8 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
             maxMove = comm.recv(source=rankMax)
     elif rank == rankMax:
         comm.send(move, dest=p_root)
+
+    print "Rank" + str(rank) + "Time" + str(time.time()-rankTime)
 
     if rank == p_root:
         #print "move" + str(maxMove)
