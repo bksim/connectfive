@@ -140,6 +140,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
         alpha = max(alpha, current_best_score)
 
+        comm.barrier()
         alpha = comm.allreduce(alpha, op=MPI.MAX)
 
 
