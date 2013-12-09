@@ -390,7 +390,7 @@ class AlphaBetaAgent:
             if v <= alpha:
                 return v
             beta = min(beta, v)
-            print "MIN VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
+            #print "MIN VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
 
         return v
 
@@ -409,7 +409,7 @@ class AlphaBetaAgent:
             if current_best_score >= beta:
                 return current_best_action
             alpha = max(alpha, current_best_score)
-        print "GETACTION, DEPTH " + str(self.depth) + " VALUES: " + str(alpha) + " " + str(beta)
+        #print "GETACTION, DEPTH " + str(self.depth) + " VALUES: " + str(alpha) + " " + str(beta)
 
         return current_best_action
 
