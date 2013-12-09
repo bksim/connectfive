@@ -375,12 +375,13 @@ class AlphaBetaAgent:
             if v >= beta:
                 return v
             alpha = max(alpha, v)
+            print "MAX VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
+
         return v
 
     def minValue(self, gameState, agentIndex, depth, alpha, beta):
         if depth == 0 or self.is_terminal(gameState):
             return self.evaluationFunction(gameState)
-
         v = float("inf")
         actions = gameState.getLegalActions(gameState)
         for action in actions:
@@ -389,6 +390,8 @@ class AlphaBetaAgent:
             if v <= alpha:
                 return v
             beta = min(beta, v)
+            #print "MIN VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
+
         return v
 
     def getAction(self, gameState, agentIndex):
@@ -406,11 +409,13 @@ class AlphaBetaAgent:
             if current_best_score >= beta:
                 return current_best_action
             alpha = max(alpha, current_best_score)
+        #print "GETACTION, DEPTH " + str(self.depth) + " VALUES: " + str(alpha) + " " + str(beta)
+
         return current_best_action
 
 if __name__ == '__main__':
     minimax_agent = MinimaxAgent(depth=0) #depth = 1
-    alphabeta_agent = AlphaBetaAgent(depth=0)
+    alphabeta_agent = AlphaBetaAgent(depth=1)
 
     size = 15
 
@@ -462,8 +467,8 @@ if __name__ == '__main__':
     second[0] = 2  
     second[1] = 1
     second[2] = 0
-    second[3] = 0
-    second[4] = 1
+    second[3] = 1
+    second[4] = 0
 
     gameState = ConnectFiveGameState(clean_board, -1, firstPlayerHeuristic=first, secondPlayerHeuristic=second, \
         lastMovePlayed=(7,7), moveOrdering=spiral)
