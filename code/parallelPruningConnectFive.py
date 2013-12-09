@@ -3,9 +3,10 @@ from ConnectFiveMiniMax import AlphaBetaAgent
 from Tkinter import *
 from mpi4py import MPI
 import copy
+import time
 
 class ConnectFiveGraphics():
-    def __init__(self, gameState, activateAI=False):
+    def __init__(self, gameState, comm, activateAI=False):
     	## game parameters
     	self.gameState = gameState
     	self.activateAI = activateAI
@@ -14,7 +15,14 @@ class ConnectFiveGraphics():
     	self.gridSize = 40 #pixels
     	self.width = (self.size+1)*self.gridSize
     	self.height = (self.size+1)*self.gridSize
-    	
+
+        # save comm
+        self.comm = comm
+
+        # create timer
+
+        self.time = time.time()
+
     	## graphics components initialization
     	self.root = Tk()
     	self.frame = Frame(self.root)
@@ -34,9 +42,10 @@ class ConnectFiveGraphics():
 
     def mouseClicked(self, event):
     	#print "clicked at", event.x, event.y
+        self.time = time.time()
     	x = int(round(event.y / float(self.gridSize)) - 1)
     	y = int(round(event.x / float(self.gridSize)) - 1)
-    	print "move: ", str(x), str(y)
+    	print "Player Move: ", str(x), str(y)
 
     	currentTurn = self.gameState.currentTurn
     	# if legal
@@ -44,10 +53,15 @@ class ConnectFiveGraphics():
             self.playMove((x, y))
 
             # make an AI agent
-            alphabeta_agent = AlphaBetaAgent(depth=1)
+            #alphabeta_agent = AlphaBetaAgent(depth=1)
             # get ai's move
-            ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
+            #ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
+
+            # ideally we'd have something like this
+            (ai_move, score) = parallelAlphaBeta(copy.deepcopy(self.gameState), -1, self.gameState.moveOrdering, self.comm, 0)
+
             print "AI WOULD NOW PLAY: " + str(ai_move)
+            print "Time: " + str(time.time() - self.time)
             # play ai's move for it if necessary
             if self.activateAI:
                 self.playMove(ai_move)
@@ -71,7 +85,7 @@ class ConnectFiveGraphics():
 
 """ A naive parallel AlphaBeta algorithm. Simply splits branches of the minimax tree to
     various processors, and has each one run the serial minimax with alpha-beta pruning
-    on each branch. 
+    on each branch.
 
     args
     gameState: current state of the game to call the method on.
@@ -88,8 +102,13 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    # Broadcast board
+    rankTime = time.time()
+
+    # Broadcast info
+    gameState = comm.bcast(gameState, root=p_root)
+    agentIndex = comm.bcast(agentIndex, root=p_root)
     moveOrdering = comm.bcast(moveOrdering, root=p_root)
+
 
     # Get length of moves needed
     numtasks = len(moveOrdering)
@@ -101,26 +120,30 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     current_best_score = float("-inf")
     current_best_action = None
     alpha = float("-inf")
-    beta = float("-inf")
-    agent = AlphaBetaAgent(depth=1)
-    for action in spiral[start:end]:
+    beta = float("inf")
+
+    # CHANGE DEPTH
+    agent = AlphaBetaAgent(depth=2)
+
+    for action in moveOrdering[start:end]:
+        if gameState.board[action[0]][action[1]] != 0:
+            continue
         newScore = agent.minValue(gameState.generateSuccessor(agentIndex, action), \
-            -agentIndex, self.depth, alpha, beta)
+            -agentIndex, agent.depth, alpha, beta)
 
         if newScore > current_best_score:
             current_best_score = newScore
             current_best_action = action
 
         if current_best_score >= beta:
-            return current_best_action
+            break;
+
         alpha = max(alpha, current_best_score)
-   
+    print "alphabeta: " + str(alpha) + " " + str(beta)
+
+
     move = current_best_action
     score = current_best_score
-
-    ''' GET ALPHA/BETA FROM BRANCH '''
-    branchAlpha = 
-    branchBeta = 
 
     # Reduce the partial results to the root process via MaxLoc which is a max or a value 1, paired with a value 2
 
@@ -134,18 +157,14 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     elif rank == rankMax:
         comm.send(move, dest=p_root)
 
-    # Get the max of the alphas
-
-    branchAlpha = comm.reduce(branchAlpha, op=MPI.MAX)
-
-    # Get the min of the betas
-
-    branchBeta = comm.reduce(branchBeta, op=MPI.MIN)
+    print "Rank" + str(rank) + "Time" + str(time.time()-rankTime)
 
     if rank == p_root:
-        return maxMove, maxScore, branchAlpha, branchBeta
+        #print "move" + str(maxMove)
+        #print "score" + str(maxScore)
+        return (maxMove, maxScore)
     else:
-        return None, None, None, None
+        return (None, None)
 
 def getStart(numtasks, size, rank):
   # Offset by rank to account for n+1 spaces
@@ -157,30 +176,46 @@ def getStart(numtasks, size, rank):
 
 
 if __name__ == '__main__':
-    print("Welcome to Connect 5!")
-    size = 15
 
     # Get MPI data
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
-    size = comm.Get_size()
 
     if rank == 0:
+        print("Welcome to Connect 5!")
+        size = 15
         clean_board = [x[:] for x in [[0]*size]*size]
         spiral = []
         start = (int(size / 2), int(size / 2))
         spiral.append(start)
         side_length = 1
-        
+
         while spiral[-1] != (0,0):
-        	f = 1 if side_length % 2 == 1 else -1
-    	for i in range(side_length):
-    	    spiral.append((spiral[-1][0]+f, spiral[-1][1]))
-    	for j in range(side_length):
-    	    spiral.append((spiral[-1][0], spiral[-1][1]+f))
+            f = 1 if side_length % 2 == 1 else -1
+            for i in range(side_length):
+                spiral.append((spiral[-1][0]+f, spiral[-1][1]))
+            for j in range(side_length):
+                spiral.append((spiral[-1][0], spiral[-1][1]+f))
             side_length+=1
         for i in range(1, int(size)):
-        	spiral.append((i, 0))
-	
-        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
-        boardGraphics = ConnectFiveGraphics(gameState, activateAI=True)
+            spiral.append((i, 0))
+
+        # reorder the spiral!
+        modified_spiral = {}
+        num_processors = 8
+        for i, action in enumerate(spiral):
+            if i % num_processors not in modified_spiral.keys():
+                modified_spiral[i % num_processors] = [action]
+            else:
+                modified_spiral[i % num_processors].append(action)
+
+        mod_spiral = []
+        for key in modified_spiral.keys():
+            mod_spiral = mod_spiral + modified_spiral[key]
+
+        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=mod_spiral)
+
+        boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
+    else:
+        while True:
+            parallelAlphaBeta(None, None, None, comm, 0)
