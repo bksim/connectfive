@@ -139,6 +139,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
             break;
 
         alpha = max(alpha, current_best_score)
+        alpha = comm.allreduce(alpha, op=MPI.MAX)
     print "alphabeta: " + str(alpha) + " " + str(beta)
 
 
