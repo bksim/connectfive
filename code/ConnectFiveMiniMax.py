@@ -1,5 +1,5 @@
 import copy
-# depth = n, 
+# depth = n,
 # ply = 2n+1
 # if you count your own move as a ply
 # if not, then ply = 2n
@@ -41,7 +41,7 @@ class ConnectFiveGameState:
                 self.secondPlayerHeuristic[2] = 0
                 self.secondPlayerHeuristic[3] = 0
                 self.secondPlayerHeuristic[4] = 0
-        
+
         self.moveOrdering = moveOrdering # determines order which getLegalActions will return actions
         if not self.moveOrdering:
             # default is just top left to bottom right row by row
@@ -52,7 +52,7 @@ class ConnectFiveGameState:
 
     def isOver(self):
         # Check if either player has a 5 in a row or greater
-        if (self.firstPlayerHeuristic and self.secondPlayerHeuristic and 
+        if (self.firstPlayerHeuristic and self.secondPlayerHeuristic and
             (self.firstPlayerHeuristic[4] > 0 or self.secondPlayerHeuristic[4] > 0)):
             return True
         return False
@@ -78,7 +78,7 @@ class ConnectFiveGameState:
         surrounding.append((x+1, y))
         surrounding.append((x+1, y+1))
         surrounding = [(x, y) for (x, y) in surrounding if x >= 0 and x < self.size and y >= 0 and y < self.size]
-        return sum([self.board[s[0]][s[1]] == self.board[pair[0]][pair[1]] for s in surrounding]) 
+        return sum([self.board[s[0]][s[1]] == self.board[pair[0]][pair[1]] for s in surrounding])
 
     # counter of X-in-a-row heursitic
     '''Does not do 1 below properly, also starts at -1 for 1 piece....'''
@@ -96,7 +96,7 @@ class ConnectFiveGameState:
         # search vertical
         upperChain = 0
         lowerChain = 0
-        
+
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] - offset < 0:
                 break
@@ -111,7 +111,7 @@ class ConnectFiveGameState:
                 lowerChain += 1
             else:
                 break
-                
+
         if self.currentTurn == 1:
             if upperChain > 1 or (upperChain == 1 and self.isolatedCount([self.lastMovePlayed[0] - 1, self.lastMovePlayed[1]]) == 1):
                 self.firstPlayerHeuristic[upperChain-1] -= 1
@@ -135,7 +135,7 @@ class ConnectFiveGameState:
         # search horizontal
         upperChain = 0
         lowerChain = 0
-        
+
         for offset in xrange(1,5):
             if self.lastMovePlayed[1] - offset < 0:
                 break
@@ -174,7 +174,7 @@ class ConnectFiveGameState:
         # search upper left, bottom right diagonal
         upperChain = 0
         lowerChain = 0
-        
+
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] - offset < 0 or self.lastMovePlayed[1] - offset < 0:
                 break
@@ -212,7 +212,7 @@ class ConnectFiveGameState:
         # search upper right, bottom left diagonal
         upperChain = 0
         lowerChain = 0
-        
+
         for offset in xrange(1,5):
             if self.lastMovePlayed[0] - offset < 0 or self.lastMovePlayed[1] + offset >= self.size:
                 break
@@ -257,7 +257,7 @@ class ConnectFiveGameState:
 
         p1score = sum([self.firstPlayerHeuristic[i] * defensiveWeights[i] for i in range(len(defensiveWeights))])
         p2score = sum([self.secondPlayerHeuristic[i] * offensiveWeights[i] for i in range(len(offensiveWeights))])
-        
+
         score = p2score - p1score
         #print "score: " + str(score)
         return score
@@ -284,7 +284,7 @@ class ConnectFiveGameState:
     def generateSuccessor(self, agentIndex, action):
         new_board = copy.deepcopy(self.board)
         new_board[action[0]][action[1]] = agentIndex
-        successor = ConnectFiveGameState(new_board, agentIndex, 
+        successor = ConnectFiveGameState(new_board, agentIndex,
             copy.deepcopy(self.firstPlayerHeuristic), copy.deepcopy(self.secondPlayerHeuristic),
             action, self.moveOrdering)
         successor.updateXinARowHeuristic()
@@ -375,7 +375,7 @@ class AlphaBetaAgent:
             if v >= beta:
                 return v
             alpha = max(alpha, v)
-            print "MAX VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
+            #print "MAX VALUE, DEPTH " + str(depth) + " VALUES: " + str(alpha) + " " + str(beta)
 
         return v
 
@@ -455,7 +455,7 @@ if __name__ == '__main__':
     clean_board[9][6] = 1
 
     # for row in clean_board:
-    #     print row    
+    #     print row
     #print clean_board
     first = {}
     first[0] = 2
@@ -464,7 +464,7 @@ if __name__ == '__main__':
     first[3] = 0
     first[4] = 0
     second = {}
-    second[0] = 2  
+    second[0] = 2
     second[1] = 1
     second[2] = 0
     second[3] = 1
