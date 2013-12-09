@@ -123,7 +123,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     beta = float("inf")
 
     # CHANGE DEPTH
-    agent = AlphaBetaAgent(depth=1)
+    agent = AlphaBetaAgent(depth=2)
 
     for action in moveOrdering[start:end]:
         if gameState.board[action[0]][action[1]] != 0:
@@ -139,7 +139,8 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
             break;
 
         alpha = max(alpha, current_best_score)
-    print "alphabeta: " + str(alpha) + " " + str(beta)
+
+        alpha = comm.allreduce(alpha, op=MPI.MAX)
 
 
     move = current_best_action
