@@ -1,0 +1,60 @@
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+Welcome to Connect 5!
+current turn: -1
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+PARALLEL PART STARTS NOW
+rank 1done
+rank 2done
+rank 15done
+rank 0done
+rank 11done
+rank 7done
+rank 12done
+rank 8done
+rank 13done
+rank 9done
+rank 14done
+rank 10done
+rank 3done
+rank 4done
+rank 5done
+rank 6done
+Rank15Time47.2730619907
+Rank1Time47.2732260227
+Rank2Time47.2730779648
+Rank0Time47.2730629444
+TIME: 47.2759199142
+AI MOVES: (7, 7)
+Rank3Time47.2731618881
+Rank4Time47.2729790211
+Rank5Time47.2731461525
+Rank6Time47.2729837894
+Rank11Time47.2731239796
+Rank12Time47.2730109692
+Rank13Time47.2731211185
+Rank14Time47.2729609013
+Rank7Time47.2730901241
+Rank8Time47.2729840279
+Rank9Time47.2731637955
+Rank10Time47.2729780674

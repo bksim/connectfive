@@ -1,0 +1,92 @@
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+Welcome to Connect 5!
+current turn: -1
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+PARALLEL PART STARTS NOW
+rank 1done
+rank 2done
+rank 3done
+rank 4done
+rank 5done
+rank 6done
+rank 7done
+rank 0done
+rank 16done
+rank 17done
+rank 18done
+rank 19done
+rank 20done
+rank 21done
+rank 22done
+rank 23done
+rank 24done
+rank 25done
+rank 26done
+rank 27done
+rank 28done
+rank 29done
+rank 30done
+rank 31done
+rank 8done
+rank 9done
+rank 10done
+rank 11done
+rank 12done
+rank 13done
+rank 14done
+rank 15done
+Rank7Time120.578768015
+Rank1Time120.588490009
+Rank2Time120.579630852
+Rank3Time120.569625854
+Rank4Time120.579602957
+Rank5Time120.588505983
+Rank6Time120.579641104
+Rank0Time120.579613924
+TIME: 120.601652861
+AI MOVES: (7, 7)
+Rank16Time120.579583168
+Rank17Time120.588459015
+Rank24Time120.579526901
+Rank18Time120.579548836
+Rank25Time120.588418007
+Rank19Time120.56955719
+Rank26Time120.579522848
+Rank20Time120.579513073
+Rank27Time120.569584131
+Rank21Time120.588484049
+Rank28Time120.579555988
+Rank22Time120.579526901
+Rank29Time120.588438988
+Rank23Time120.578670025
+Rank30Time120.579554081
+Rank31Time120.578721046
+Rank8Time120.57961607
+Rank9Time120.588491917
+Rank10Time120.579593897
+Rank11Time120.569591045
+Rank12Time120.579627991
+Rank13Time120.588509083
+Rank14Time120.57962203
+Rank15Time120.578769922

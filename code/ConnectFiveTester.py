@@ -60,16 +60,16 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
             -agentIndex, agent.depth, alpha, beta)
 
         alpha = max(alpha, current_best_score)
-        
+
         if reduceCounter < numtasks / size:
             comm.barrier()
             alpha = comm.allreduce(alpha, op=MPI.MAX)
             comm.barrier()
             reduceCounter += 1
-        elif reduceCounter == numtasks / size:
+        if reduceCounter == numtasks / size - 1:
             print "rank " + str(rank) + "done"
             reduceCounter += 1
-        
+
         if newScore > current_best_score:
             current_best_score = newScore
             current_best_action = action
@@ -152,13 +152,19 @@ if __name__ == '__main__':
         for key in modified_spiral.keys():
             mod_spiral = mod_spiral + modified_spiral[key]
 
-        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
+        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=mod_spiral)
 
         """SET INITIAL CONDITION HERE """
         gameState = gameState.generateSuccessor(gameState.currentTurn, (6, 6))
-        #gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
-        #gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
-
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (8, 6))
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (5, 6))
+        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (6, 6))
+        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (7, 7))
+        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (7, 6))
+        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (8, 6))
+        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (5, 6))
         print "current turn: " + str(gameState.currentTurn)
 
         for line in gameState.board:

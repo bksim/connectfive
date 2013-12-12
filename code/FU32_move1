@@ -1,0 +1,86 @@
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+Welcome to Connect 5!
+current turn: -1
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+PARALLEL PART STARTS NOW
+rank 1done
+rank 2done
+rank 3done
+rank 4done
+rank 5done
+rank 6done
+rank 7done
+rank 8done
+rank 9done
+rank 10done
+rank 11done
+rank 12done
+rank 13done
+rank 14done
+rank 15done
+rank 16done
+rank 17done
+rank 18done
+rank 19done
+rank 20done
+rank 21done
+rank 22done
+rank 23done
+rank 24done
+rank 25done
+rank 26done
+rank 27done
+rank 28done
+rank 29done
+rank 30done
+rank 31done
+rank 0done
+Rank31Time63.8133649826
+Rank1Time63.8133571148
+Rank2Time63.8133409023
+Rank3Time63.8133640289
+Rank4Time63.8133089542
+Rank5Time63.8133590221
+Rank6Time63.8133499622
+Rank7Time63.8129909039
+Rank8Time63.8133330345
+Rank9Time63.8133509159
+Rank10Time63.8133430481
+Rank11Time63.8133640289
+Rank12Time63.8133261204
+Rank13Time63.813354969
+Rank14Time63.8133509159
+Rank15Time63.8133649826
+Rank16Time63.813338995
+Rank17Time63.8133571148
+Rank18Time63.8133430481
+Rank19Time63.8133671284
+Rank20Time63.8133060932
+Rank21Time63.8133609295
+Rank22Time63.813352108
+Rank23Time63.8133649826
+Rank24Time63.8133358955
+Rank25Time63.8133518696
+Rank26Time63.813336134
+Rank27Time63.8133699894
+Rank28Time63.8133280277
+Rank29Time63.8133561611
+Rank30Time63.8133530617
+Rank0Time63.813338995
+TIME: 63.8273711205
+AI MOVES: (7, 7)

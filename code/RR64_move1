@@ -1,0 +1,156 @@
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+Welcome to Connect 5!
+current turn: -1
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+PARALLEL PART STARTS NOW
+rank 1done
+rank 2done
+rank 3done
+rank 4done
+rank 5done
+rank 6done
+rank 7done
+rank 8done
+rank 9done
+rank 10done
+rank 11done
+rank 12done
+rank 13done
+rank 14done
+rank 63done
+rank 0done
+rank 31done
+rank 15done
+rank 32done
+rank 47done
+rank 16done
+rank 33done
+rank 48done
+rank 17done
+rank 34done
+rank 49done
+rank 18done
+rank 35done
+rank 50done
+rank 19done
+rank 36done
+rank 51done
+rank 20done
+rank 37done
+rank 52done
+rank 21done
+rank 38done
+rank 53done
+rank 22done
+rank 39done
+rank 54done
+rank 23done
+rank 40done
+rank 55done
+rank 24done
+rank 56done
+rank 57done
+rank 41done
+rank 58done
+rank 25done
+rank 42done
+rank 59done
+rank 26done
+rank 43done
+rank 60done
+rank 27done
+rank 44done
+rank 61done
+rank 28done
+rank 45done
+rank 62done
+rank 29done
+rank 46done
+rank 30done
+Rank63Time49.3057031631
+Rank1Time49.3057689667
+Rank2Time50.2824730873
+Rank3Time49.3057761192
+Rank4Time50.2825021744
+Rank5Time49.3057539463
+Rank6Time50.2825629711
+Rank7Time49.3058052063
+Rank8Time50.2824070454
+Rank9Time49.3056499958
+Rank10Time50.282407999
+Rank11Time49.3057749271
+Rank12Time50.2824590206
+Rank13Time49.3057701588
+Rank14Time50.2824838161
+Rank0Time50.2823228836
+TIME: 50.2855308056
+AI MOVES: (7, 7)
+Rank32Time50.2821969986
+Rank33Time49.3056309223
+Rank34Time50.2823011875
+Rank35Time49.3056378365
+Rank36Time50.2822511196
+Rank37Time49.305642128
+Rank38Time50.2823300362
+Rank39Time49.3056740761
+Rank40Time50.2822890282
+Rank41Time49.3055410385
+Rank42Time50.2821900845
+Rank43Time49.3056161404
+Rank44Time50.2822730541
+Rank15Time49.3057808876
+Rank45Time49.3056302071
+Rank16Time50.2824480534
+Rank46Time50.2822542191
+Rank17Time49.3055830002
+Rank31Time49.3056941032
+Rank18Time50.2823939323
+Rank19Time49.3056609631
+Rank20Time50.2823700905
+Rank21Time49.3056230545
+Rank22Time50.2823810577
+Rank23Time49.3057639599
+Rank24Time50.2822949886
+Rank25Time49.3055548668
+Rank26Time50.2822630405
+Rank27Time49.3056328297
+Rank28Time50.2822918892
+Rank29Time49.3055970669
+Rank30Time50.2823729515
+Rank47Time49.3056361675
+Rank48Time50.2821938992
+Rank49Time49.305533886
+Rank50Time50.2821698189
+Rank51Time49.305437088
+Rank52Time50.2822349072
+Rank53Time49.305521965
+Rank54Time50.2821857929
+Rank55Time49.3056869507
+Rank56Time50.2821688652
+Rank57Time49.3055360317
+Rank58Time50.2821800709
+Rank59Time49.305437088
+Rank60Time50.2821681499
+Rank61Time49.3055970669
+Rank62Time50.2821748257

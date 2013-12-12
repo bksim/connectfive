@@ -1,0 +1,92 @@
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+bash: module: line 1: syntax error: unexpected end of file
+bash: error importing function definition for `module'
+Welcome to Connect 5!
+current turn: -1
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+PARALLEL PART STARTS NOW
+rank 1done
+rank 2done
+rank 3done
+rank 4done
+rank 5done
+rank 6done
+rank 31done
+rank 0done
+rank 24done
+rank 25done
+rank 7done
+rank 26done
+rank 8done
+rank 15done
+rank 27done
+rank 9done
+rank 16done
+rank 28done
+rank 10done
+rank 17done
+rank 29done
+rank 11done
+rank 18done
+rank 30done
+rank 12done
+rank 19done
+rank 23done
+rank 13done
+rank 20done
+rank 14done
+rank 21done
+rank 22done
+Rank31Time49.9436569214
+Rank1Time49.9437949657
+Rank2Time49.9436688423
+Rank3Time49.943778038
+Rank4Time49.9436569214
+Rank5Time49.9437940121
+Rank6Time49.9436609745
+Rank0Time49.9436337948
+TIME: 49.9472370148
+AI MOVES: (7, 7)
+Rank15Time49.9436750412
+Rank16Time49.9436490536
+Rank17Time49.943800211
+Rank18Time49.9437251091
+Rank19Time49.9437789917
+Rank20Time49.943655014
+Rank21Time49.9437949657
+Rank22Time49.9436709881
+Rank7Time49.9437589645
+Rank8Time49.9436240196
+Rank9Time49.9437530041
+Rank10Time49.943572998
+Rank11Time49.9437110424
+Rank12Time49.943543911
+Rank13Time49.943723917
+Rank14Time49.9435830116
+Rank30Time49.9435520172
+Rank24Time49.9436252117
+Rank25Time49.9436941147
+Rank26Time49.9435579777
+Rank27Time49.9437129498
+Rank28Time49.9435768127
+Rank29Time49.9436569214
+Rank23Time49.9437470436
