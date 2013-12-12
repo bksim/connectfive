@@ -145,12 +145,12 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
         alpha = max(alpha, current_best_score)
         
-        if reduceCounter < numtasks / size:
+        if reduceCounter < numtasks / size - 8:
             comm.barrier()
             alpha = comm.allreduce(alpha, op=MPI.MAX)
             comm.barrier()
             reduceCounter += 1
-        elif reduceCounter == numtasks / size:
+        elif reduceCounter == numtasks / size - 8:
             print "rank " + str(rank) + "done"
             reduceCounter += 1
         
