@@ -156,15 +156,15 @@ if __name__ == '__main__':
 
         """SET INITIAL CONDITION HERE """
         gameState = gameState.generateSuccessor(gameState.currentTurn, (6, 6))
-        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
-        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
-        gameState = gameState.generateSuccessor(gameState.currentTurn, (8, 6))
-        gameState = gameState.generateSuccessor(gameState.currentTurn, (5, 6))
+        #gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
+        #gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
+        #gameState = gameState.generateSuccessor(gameState.currentTurn, (8, 6))
+        #gameState = gameState.generateSuccessor(gameState.currentTurn, (5, 6))
         gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (6, 6))
-        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (7, 7))
-        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (7, 6))
-        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (8, 6))
-        gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (5, 6))
+        #gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (7, 7))
+        #gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (7, 6))
+        #gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (8, 6))
+        #gameState.moveOrdering = removeFromSpiral(gameState.moveOrdering, (5, 6))
         print "current turn: " + str(gameState.currentTurn)
 
         for line in gameState.board:

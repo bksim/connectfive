@@ -10,7 +10,7 @@
 #$ -S /bin/bash
 # The number of processes to launch
 # (Change the number)
-#$ -pe mpi_round_robin 200
+#$ -pe mpi_round_robin 8
 
 # Import environment and profile
 source /etc/profile
