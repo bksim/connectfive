@@ -51,6 +51,7 @@ class ConnectFiveGraphics():
     	# if legal
     	if (x, y) in self.gameState.getLegalActions(currentTurn):
             self.playMove((x, y))
+            removeFromSpiral(self.gameState.moveOrdering, (x,y))
 
             # make an AI agent
             #alphabeta_agent = AlphaBetaAgent(depth=1)
@@ -65,6 +66,7 @@ class ConnectFiveGraphics():
             # play ai's move for it if necessary
             if self.activateAI:
                 self.playMove(ai_move)
+                removeFromSpiral(self.gameState.moveOrdering, ai_move)
 
     def drawMove(self, action, currentTurn):
     	r = 20
@@ -82,6 +84,9 @@ class ConnectFiveGraphics():
         toMoveString = "black" if currentTurn == -1 else "white"
         self.player.set("To move: " + toMoveString)
         self.drawMove(action, currentTurn)
+
+def removeFromSpiral(moveOrdering, turn)
+    '''Remove the turn from the list of moves'''
 
 """ A naive parallel AlphaBeta algorithm. Simply splits branches of the minimax tree to
     various processors, and has each one run the serial minimax with alpha-beta pruning
@@ -139,8 +144,11 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
         alpha = max(alpha, current_best_score)
 
-        if reduceCounter < numtasks % size
+        if reduceCounter < numtasks / size - 10
             alpha = comm.allreduce(alpha, op=MPI.MAX)
+            reduceCounter += 1
+        elif reduceCounter = numtasks / size - 10
+            print "rank " + str(rank) + "done"
             reduceCounter += 1
 
         if newScore > current_best_score:
@@ -188,6 +196,7 @@ if __name__ == '__main__':
     # Get MPI data
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
+    size = comm.Get_size()
 
     if rank == 0:
         print("Welcome to Connect 5!")
@@ -210,12 +219,11 @@ if __name__ == '__main__':
 
         # reorder the spiral!
         modified_spiral = {}
-        num_processors = 8
         for i, action in enumerate(spiral):
-            if i % num_processors not in modified_spiral.keys():
-                modified_spiral[i % num_processors] = [action]
+            if i % size not in modified_spiral.keys():
+                modified_spiral[i % size] = [action]
             else:
-                modified_spiral[i % num_processors].append(action)
+                modified_spiral[i % size].append(action)
 
         mod_spiral = []
         for key in modified_spiral.keys():
