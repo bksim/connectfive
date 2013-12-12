@@ -233,7 +233,7 @@ if __name__ == '__main__':
         for key in modified_spiral.keys():
             mod_spiral = mod_spiral + modified_spiral[key]
 
-        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
+        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=mod_spiral)
 
         boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
     else:
