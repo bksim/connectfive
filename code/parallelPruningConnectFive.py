@@ -144,7 +144,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
             -agentIndex, agent.depth, alpha, beta)
 
         alpha = max(alpha, current_best_score)
-
+        '''
         if reduceCounter < numtasks / size:
             comm.barrier()
             alpha = comm.allreduce(alpha, op=MPI.MAX)
@@ -153,7 +153,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
         elif reduceCounter == numtasks / size:
             print "rank " + str(rank) + "done"
             reduceCounter += 1
-
+        '''
         if newScore > current_best_score:
             current_best_score = newScore
             current_best_action = action
@@ -233,7 +233,7 @@ if __name__ == '__main__':
         for key in modified_spiral.keys():
             mod_spiral = mod_spiral + modified_spiral[key]
 
-        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=mod_spiral)
+        gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
 
         boardGraphics = ConnectFiveGraphics(gameState, comm=comm, activateAI=True)
     else:
