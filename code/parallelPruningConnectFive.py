@@ -42,7 +42,7 @@ class ConnectFiveGraphics():
 
     def mouseClicked(self, event):
     	#print "clicked at", event.x, event.y
-        self.time = time.time()
+
     	x = int(round(event.y / float(self.gridSize)) - 1)
     	y = int(round(event.x / float(self.gridSize)) - 1)
     	print "Player Move: ", str(x), str(y)
@@ -51,13 +51,13 @@ class ConnectFiveGraphics():
     	# if legal
     	if (x, y) in self.gameState.getLegalActions(currentTurn):
             self.playMove((x, y))
-            removeFromSpiral(self.gameState.moveOrdering, (x,y))
+            self.gameState.moveOrdering = removeFromSpiral(self.gameState.moveOrdering, (x,y))
 
             # make an AI agent
             #alphabeta_agent = AlphaBetaAgent(depth=1)
             # get ai's move
             #ai_move = alphabeta_agent.getAction(copy.deepcopy(self.gameState), -1)
-
+            self.time = time.time()
             # ideally we'd have something like this
             (ai_move, score) = parallelAlphaBeta(copy.deepcopy(self.gameState), -1, self.gameState.moveOrdering, self.comm, 0)
 
@@ -66,7 +66,7 @@ class ConnectFiveGraphics():
             # play ai's move for it if necessary
             if self.activateAI:
                 self.playMove(ai_move)
-                removeFromSpiral(self.gameState.moveOrdering, ai_move)
+                self.gameState.moveOrdering = removeFromSpiral(self.gameState.moveOrdering, ai_move)
 
     def drawMove(self, action, currentTurn):
     	r = 20
@@ -85,7 +85,8 @@ class ConnectFiveGraphics():
         self.player.set("To move: " + toMoveString)
         self.drawMove(action, currentTurn)
 
-def removeFromSpiral(moveOrdering, turn)
+def removeFromSpiral(moveOrdering, turn):
+    return moveOrdering
     '''Remove the turn from the list of moves'''
 
 """ A naive parallel AlphaBeta algorithm. Simply splits branches of the minimax tree to
@@ -144,10 +145,10 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
         alpha = max(alpha, current_best_score)
 
-        if reduceCounter < numtasks / size - 10
+        if reduceCounter < numtasks / size - 10:
             alpha = comm.allreduce(alpha, op=MPI.MAX)
             reduceCounter += 1
-        elif reduceCounter = numtasks / size - 10
+        elif reduceCounter == numtasks / size - 10:
             print "rank " + str(rank) + "done"
             reduceCounter += 1
 
