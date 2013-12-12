@@ -118,7 +118,7 @@ if __name__ == '__main__':
     # Get MPI data
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
-    size = comm.Get_size()
+    num_processors = comm.Get_size()
 
     if rank == 0:
         print("Welcome to Connect 5!")
@@ -143,10 +143,10 @@ if __name__ == '__main__':
         # reorder the spiral!
         modified_spiral = {}
         for i, action in enumerate(spiral):
-            if i % size not in modified_spiral.keys():
-                modified_spiral[i % size] = [action]
+            if i % num_processors not in modified_spiral.keys():
+                modified_spiral[i % num_processors] = [action]
             else:
-                modified_spiral[i % size].append(action)
+                modified_spiral[i % num_processors].append(action)
 
         mod_spiral = []
         for key in modified_spiral.keys():
