@@ -46,18 +46,22 @@
   </div>
 
   <body style="padding-top:60px;">
-    <div style="width:70%; margin-left:auto; margin-right:auto;">
-      <h2 style="text-align:center;">Connect 4 is fun. Connect 5 is even more fun. <br>We wanted to create an AI agent which could play the game of Connect 5 well.</h2>
-      <br><br>
+    <div style="width:60%; margin-left:auto; margin-right:auto;">
+      <h2 style="text-align:center;">Motivation</h2>
+      <br><br>  
+      Connect-5 (also known as Gomoku) is a 2-player, zero-sum board game normally played on a 15x15 grid.  The players alternate turns, placing a piece anywhere on the grid.  The first to have at least 5 pieces in a row (horizontally, vertically or diagonally) wins.<br><br>
 
-      <div style="text-align:center;width:50%;margin-left:auto;margin-right:auto;">
-        Here's a video about our work:<br><br>
+      <center><img width="33%" src="img/gomoku.svg"></img></center><br><br>
 
-        <iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/n_B7sOrQWpg" allowfullscreen frameborder="0"></iframe>
+We were inspired to create an AI for Connect-5 after both seeing Cris's Connect-4 parallel AI as well as reading about game state trees for tic-tac-toe.  Such zero-sum games are perfect candidates for minimax game state trees with further optimization from alpha-beta pruning.  An expansion to Connect-5 as compared to Connect-4 brings the follow challenges we seek to address with parallel approaches:<br><br>
 
-        <br><br>
-        This was a project by Wesley Chen '15 and Brandon Sim '15, Harvard University.
-      </div>
+<ul>
+<li>The number of possible moves per turn increases by 20-30 fold depending on the size of the Connect-4 since pieces fall to the bottom in Connect-4 thus making Connect-4 moves 1D compared to the 2D possibilities of Connect-5.  This in turn magnifies our search space per ply as well.</li>
+
+<li>With a larger search space, there will be more room for optimization, with possibly different approaches at different times in the game (early vs. late), including tree-ordering, alpha-beta pruning and other possible techniques.</li>
+
+<li>Extending the winning sequence by 1 results in the possibility of more complex heuristics to score each game state, allowing for various strategies including trap-setting such a double, open-ended 3's.</li>
+</ul>
     </div>
 
     <script src="http://code.jquery.com/jquery.js"></script>
