@@ -86,7 +86,7 @@ class ConnectFiveGraphics():
         self.drawMove(action, currentTurn)
 
 def removeFromSpiral(moveOrdering, turn):
-    return moveOrdering
+    return [move for move in moveOrdering if move != turn]
     '''Remove the turn from the list of moves'''
 
 """ A naive parallel AlphaBeta algorithm. Simply splits branches of the minimax tree to
