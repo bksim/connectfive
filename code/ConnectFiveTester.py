@@ -156,8 +156,8 @@ if __name__ == '__main__':
 
         """SET INITIAL CONDITION HERE """
         gameState = gameState.generateSuccessor(gameState.currentTurn, (6, 6))
-        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
-        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
+        #gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
+        #gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
 
         print "current turn: " + str(gameState.currentTurn)
 
