@@ -155,8 +155,10 @@ if __name__ == '__main__':
         gameState = ConnectFiveGameState(clean_board, 1, moveOrdering=spiral)
 
         """SET INITIAL CONDITION HERE """
-        actionPlayed = (7, 7)
-        gameState = gameState.generateSuccessor(gameState.currentTurn, actionPlayed)
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (6, 6))
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 7))
+        gameState = gameState.generateSuccessor(gameState.currentTurn, (7, 6))
+
         print "current turn: " + str(gameState.currentTurn)
 
         for line in gameState.board:

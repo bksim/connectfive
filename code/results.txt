@@ -1,0 +1,18 @@
+Situation:
+Black plays (7, 7)
+AI plays (???) what is correct??
+
+Move Ordering: Normal Spiral (not modded) <<ALL RETURN (8, 7)>>
+n    Time
+128  139.1 sec
+64   66.27 sec
+32   43.80 sec
+16   45.83 sec
+8    48.26 sec
+2    80.28 sec
+
+Move Ordering: Modified Spiral <<ALL RETURN THE WRONG MOVE!!!>>
+n    Time
+128  143.0 sec
+32   120.8 sec
+====================================================
