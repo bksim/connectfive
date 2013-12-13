@@ -49,7 +49,15 @@
     <div style="width:70%; margin-left:auto; margin-right:auto;">
       <h2 style="text-align:center;">Remarks</h2>
       <br><br>
-      We would like to thank the staff of CS205 headed by Prof. Cris Cecka in giving us the opportunity to pursue this project.  We would also like to thank IACS for the chance to present this project.
+      The most challenging but rewarding part of attempting this project was in starting to think about how to parallelize our project.  We started with just the question "wouldn't it be cool if we parallelized a more complicated version of Cris' Connect-4, namely Connect 5?"  Then, when looking into how to approach each problem, from designing the heuristic to dividing up our tasks, we gradually designed our approach.  Synchronizing MPI (with external events like a mouse-click GUI) and setting up environments to test 2+ processors was also a technical challenge.  At the end of the day, we confirmed that parallelizing game-state trees is really non-trivial.
+      <br><br>
+      The greatest frustration we had was probably a toss-up between getting our parallel code to actually perform faster and setting up environments to test 2+ processors.  The former gave us a lot of problems - we were doing everything correctly but alpha-beta pruning is just so effective that serially, it works so well.  Without taking an extra communication step to pass along some alpha values at the top nodes, we couldn't compete with the serial version.  The latter had to do with working with the CS205 node, installing the GUI libraries we needed didn't work out well for us and we ended up benchmarking times based on a command-line only version.
+      <br><br>
+      I think our learning trajectory was pretty on point - next time, we won't underestimate benchmarking our code once it's written but other than that, our project flow went well.
+      <br><br>
+      And finally, there's nothing more gratifying than opening the output document and seeing the correct move played, with a faster time given more processors.
+      <br><br>
+      We would like to thank the staff of CS205 headed by Prof. Cris Cecka in giving us the opportunity to pursue this project.
 
     </div>
 
