@@ -1,6 +1,5 @@
 move 1
 n    Time
-128  139.1 sec
 64   50.28 sec
 32RR 49.94 sec
 32FU 63.81 sec
@@ -11,10 +10,10 @@ n    Time
 Serial 86.92 sec
 
 move 2
-20068.87 sec
+200  68.87 sec
 128  75.01 sec
 64   130.60 sec
-32	86.98 sec
+32	274.52 sec
 Serial 495.86 sec
 
 

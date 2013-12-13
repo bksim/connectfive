@@ -58,56 +58,183 @@
       Our speedups hit a peak value which is the value at which processing more branches in one turn no longer contributes to the alpha pruning of the next time iteration.  This processor value does vary depending on how complex the current game board is.  Any more processors after hitting this peak will only add to the communication time.
       <br><br>
       We did notice that the time between each move, espescially when running serial or fewer processors, does vary between runs.  When the processors were occupied with other operations, our timings were drastically slower.
-
+      <br><br>
+      At the end of the day, although we can see consistent speedups of nearly 8x, this does depend on the complexity of the move and also costs many processors at low efficiency to do so.
 
       <br><br>
       Move 1, with Round Robin, after player plays (6, 6)
       <br>
       <table>
         <tr>
-          <th>Num Processors</th>
+          <th>Processors</th>
           <th>Time</th>
           <th>Speedup</th>
           <th>Efficiency</th>
         </tr>
         <tr>
-          <td>row 1, cell 1</td>
-          <td>row 1, cell 2</td>
+          <td>Serial</td>
+          <td>86.92</td>
+          <td>1.0</td>
+          <td>1.0</td>
         </tr>
         <tr>
-          <td>row 2, cell 1</td>
-          <td>row 2, cell 2</td>
+          <td>1</td>
+          <td>86.98</td>
+          <td>1.0</td>
+          <td>1.0</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>78.25</td>
+          <td>1.11</td>
+          <td>0.56</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>47.27</td>
+          <td>1.84</td>
+          <td>0.11</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td>49.94</td>
+          <td>1.74</td>
+          <td>0.05</td>
+        </tr>
+        <tr>
+          <td>64</td>
+          <td>50.28</td>
+          <td>1.73</td>
+          <td>0.02</td>
         </tr>
       </table>
- 
-
+      <br>
       Note: All return (7, 7) as the optimal move.
 
       <br><br>
       Move 2, with Round Robin, after player plays (6, 6), AI plays (7, 7) and player plays (7, 6)
       <br>
-
-
+      <table>
+        <tr>
+          <th>Processors</th>
+          <th>Time</th>
+          <th>Speedup</th>
+          <th>Efficiency</th>
+        </tr>
+        <tr>
+          <td>Serial</td>
+          <td>495.86</td>
+          <td>1.0</td>
+          <td>1.0</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td>274.52</td>
+          <td>1.80</td>
+          <td>0.06</td>
+        </tr>
+        <tr>
+          <td>64</td>
+          <td>130.60</td>
+          <td>3.80</td>
+          <td>0.06</td>
+        </tr>
+        <tr>
+          <td>128</td>
+          <td>75.01</td>
+          <td>6.61</td>
+          <td>0.05</td>
+        </tr>
+        <tr>
+          <td>200</td>
+          <td>68.87</td>
+          <td>7.20</td>
+          <td>0.04</td>
+        </tr>
+      </table>
+      <br>
       Note: All return (8, 6) as the optimal move.
+
       <br><br>
       Move 3, with Round Robin, after player plays (6, 6), AI plays (7, 7), player plays (7, 6), AI plays (8, 6) and user plays (5, 6)
       <br>
-
+      <table>
+        <tr>
+          <th>Processors</th>
+          <th>Time</th>
+          <th>Speedup</th>
+          <th>Efficiency</th>
+        </tr>
+        <tr>
+          <td>Serial</td>
+          <td>905.53</td>
+          <td>1.00</td>
+          <td>1.0</td>
+        </tr>
+        <tr>
+          <td>128</td>
+          <td>533.37</td>
+          <td>1.70</td>
+          <td>0.01</td>
+        </tr>
+      </table>
+      <br>
       Note: All return (4, 6) as the optimal move.
 
       <br><br>
-      Demonstration of Fill Up vs. Round Robin
+      Demonstration of Fill Up vs. Round Robin, Move 1, after player plays (6, 6)
+      <br>
+      <table>
+        <tr>
+          <th>Processors</th>
+          <th>Time</th>
+          <th>Speedup</th>
+          <th>Efficiency</th>
+        </tr>
+        <tr>
+          <td>32 Fill Up</td>
+          <td>63.81</td>
+          <td>1.36</td>
+          <td>0.04</td>
+        </tr>
+        <tr>
+          <td>32 Round Robin</td>
+          <td>49.94</td>
+          <td>1.74</td>
+          <td>0.05</td>
+        </tr>
+      </table>
       <br>
 
       <br><br>
-      Demonstration of Tree Ordering
+      Demonstration of Tree Ordering(see notes below), Move 1, after player plays (6, 6)
       <br>
-
+      <table>
+        <tr>
+          <th>Processors</th>
+          <th>Time</th>
+          <th>Speedup</th>
+          <th>Efficiency</th>
+        </tr>
+        <tr>
+          <td>32 Spiral Ordering</td>
+          <td>49.94</td>
+          <td>1.74</td>
+          <td>0.05</td>
+        </tr>
+        <tr>
+          <td>32 Alternate Ordering</td>
+          <td>120.57</td>
+          <td>0.72</td>
+          <td>0.02</td>
+        </tr>
+      </table>
+      <br>
       
       <br><br>
       A few notes:
       <br>
-      All numbers shown are at depth = 2, 4-ply.  At 1 depth, or 2-ply, the computation was so fast (on the order of less than a second) that results varied heavily and were hard to get consistent numbers.  The serial version was done using our GUI interface (ConnectFive.py) so that we could easily identify and rationalize why our AI played at certain squares and what it could defend against and what it could not see - please see our video for a play by play of an extended game).  Our parallel GUI version is parallelPruningConnectFive.py but the parallel numbers are computed without the GUI (using ConnectFiveTester.py) due to library issues on the CS205 node.
+      All numbers shown are at depth = 2, 4-ply.  At 1 depth, or 2-ply, the computation was so fast (on the order of less than a second) that results varied heavily and were hard to get consistent numbers.  The serial version was done using our GUI interface (ConnectFive.py) so that we could easily identify and rationalize why our AI played at certain squares and what it could defend against and what it could not see - please see our video for a play by play of an extended game).  Our parallel GUI version is parallelPruningConnectFive.py but the parallel numbers are computed without the GUI (using ConnectFiveTester.py) due to library issues on the CS205 node.  Both the serial and parallel version use a spiral ordering for the tree - meaning the first moves evaluated are the legal moves that start with the center of the board and then spiral outwards so that the corners are evaluated last.
 
     </div>
 
