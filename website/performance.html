@@ -49,38 +49,65 @@
     <div style="width:70%; margin-left:auto; margin-right:auto;">
       <h2 style="text-align:center;">Performance</h2>
       <br><br>
-      General Summary:<br>
-      At depth 2, the AI properly blocks open-ended 3s.  If it is unable to make an attack of it's own, it will also block closed-3s as it views them as a high priority threat.  When there are no other >3 threats, the AI will attack hoping to create a 3 of it's own.  Sometimes, due to our heuristic, it will play in spots which are already blocked on both sides as it is not able to see past 4 moves.  A double-3 trap, where a single piece will result in 2 open-ended 3s, will also not be spotted by our ply-4 solver, as its loss is also 6 turns away.
-      <br>
+      General Summary:
+      <br><br>
+      At depth 2 (more notes about our testing environment found at the bottom of the page), the AI properly blocks open-ended 3s.  If it is unable to make an attack of it's own, it will also block closed-3s as it views them as a high priority threat.  When there are no other >3 threats, the AI will attack hoping to create a 3 of it's own.  Sometimes, due to our heuristic, it will play in spots which are already blocked on both sides as it is not able to see past 4 moves.  A double-3 trap, where a single piece will result in 2 open-ended 3s, will also not be spotted by our ply-4 solver, as its loss is also 6 turns away.
+      <br><br>
       For speedups, we see fairly low efficiency during the first several processors.  This is because of the efficient pruning between branches with serial alpha-beta pruning.  The efficiency picks up as we add more and more processors, as then the division beings to outweight the benefits of serial pruning.  With the board state allows for less pruning, our parallel version shows much better speedups.  When timing. communication cost is not a major factor because the search space is so large and thus, only a few MPI operations would not affect the magnitude of our timing.
-      <br>
+      <br><br>
       Our speedups hit a peak value which is the value at which processing more branches in one turn no longer contributes to the alpha pruning of the next time iteration.  This processor value does vary depending on how complex the current game board is.  Any more processors after hitting this peak will only add to the communication time.
-      <br>
+      <br><br>
       We did notice that the time between each move, espescially when running serial or fewer processors, does vary between runs.  When the processors were occupied with other operations, our timings were drastically slower.
 
-      <br><br>
-      A few notes:
-      <br>
-      All numbers shown are at depth = 2, 4-ply.  At 1 depth, or 2-ply, the computation was so fast (on the order of less than a second) that results varied heavily and were hard to get consistent numbers.  The serial version was done using our GUI interface (ConnectFive.py) so that we could easily identify and rationalize why our AI played at certain squares and what it could defend against and what it could not see - please see our video for a play by play of an extended game).  Our parallel GUI version is parallelPruningConnectFive.py but the parallel numbers are computed without the GUI (using ConnectFiveTester.py) due to library issues on the CS205 node.
-      
 
       <br><br>
-      Comparison of Speedups/Efficiency of Move 1, with Round Robin, after player plays (6, 6)
+      Move 1, with Round Robin, after player plays (6, 6)
       <br>
+      <table>
+        <tr>
+          <th>Num Processors</th>
+          <th>Time</th>
+          <th>Speedup</th>
+          <th>Efficiency</th>
+        </tr>
+        <tr>
+          <td>row 1, cell 1</td>
+          <td>row 1, cell 2</td>
+        </tr>
+        <tr>
+          <td>row 2, cell 1</td>
+          <td>row 2, cell 2</td>
+        </tr>
+      </table>
+ 
 
       Note: All return (7, 7) as the optimal move.
 
       <br><br>
-      Comparison of Speedups/Efficiency of Move 2, with Round Robin, after player plays (6, 6), AI plays (7, 7) and player plays (7, 6)
+      Move 2, with Round Robin, after player plays (6, 6), AI plays (7, 7) and player plays (7, 6)
       <br>
 
 
       Note: All return (8, 6) as the optimal move.
       <br><br>
-      Comparison of Speedups/Efficiency of Move 2, with Round Robin, after player plays (6, 6), AI plays (7, 7), player plays (7, 6), AI plays (8, 6) and user plays (5, 6)
+      Move 3, with Round Robin, after player plays (6, 6), AI plays (7, 7), player plays (7, 6), AI plays (8, 6) and user plays (5, 6)
       <br>
 
       Note: All return (4, 6) as the optimal move.
+
+      <br><br>
+      Demonstration of Fill Up vs. Round Robin
+      <br>
+
+      <br><br>
+      Demonstration of Tree Ordering
+      <br>
+
+      
+      <br><br>
+      A few notes:
+      <br>
+      All numbers shown are at depth = 2, 4-ply.  At 1 depth, or 2-ply, the computation was so fast (on the order of less than a second) that results varied heavily and were hard to get consistent numbers.  The serial version was done using our GUI interface (ConnectFive.py) so that we could easily identify and rationalize why our AI played at certain squares and what it could defend against and what it could not see - please see our video for a play by play of an extended game).  Our parallel GUI version is parallelPruningConnectFive.py but the parallel numbers are computed without the GUI (using ConnectFiveTester.py) due to library issues on the CS205 node.
 
     </div>
 
