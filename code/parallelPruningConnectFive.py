@@ -118,8 +118,6 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
     # Get length of moves needed
     numtasks = len(moveOrdering)
-
-    '''HELPFUL PRINT OUT HERE to see if the legal moves are updated'''
     #print numtasks
 
     # Start and end indices for undivisible sizes
@@ -132,7 +130,7 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
     beta = float("inf")
 
     # CHANGE DEPTH
-    agent = AlphaBetaAgent(depth=2)
+    agent = AlphaBetaAgent(depth=1)
 
     # for synchronization of communication
     reduceCounter = 0;
@@ -145,12 +143,12 @@ def parallelAlphaBeta(gameState, agentIndex, moveOrdering, comm, p_root=0):
 
         alpha = max(alpha, current_best_score)
         
-        if reduceCounter < numtasks / size - 8:
+        if reduceCounter < numtasks / size - 4:
             comm.barrier()
             alpha = comm.allreduce(alpha, op=MPI.MAX)
             comm.barrier()
             reduceCounter += 1
-        elif reduceCounter == numtasks / size - 8:
+        elif reduceCounter == numtasks / size - 5:
             print "rank " + str(rank) + "done"
             reduceCounter += 1
         

@@ -49,6 +49,13 @@
     <div style="width:70%; margin-left:auto; margin-right:auto;">
       <h2 style="text-align:center;">Further Work</h2>
       <br><br>
+      There are many ideas to pursue in optimizing our AI.  More work could be done in optimizing our tree-ordering.  We had worked with a modified spiral but even more work could be done to prioritize the spaces to check based on the last move played.
+      <br><br>
+      We would be interested in creating a heuristic in which the AI would determine whether parallel computation would be faster or of serial, full pruning would be faster.  Our in-game heuristic could be changed as well.  Right now, we only count X-in-a-row and weight each accordingly (which we tweaked around).  Ideally, we'd also like to count if the sequence is bounded on one side, or better yet, bounded within a space of 5 but each of these checks were more expensive and not simple to code.  Even our current heuristic implementation was more difficult than expected.
+      <br><br>
+      We would also like to amortize our game state trees – in which the same game state resulting from a different series of moves would be identified as the same.  A better amortization would even account for symmetry, as our game as 2 reflective and 3 rotational symmetries other than the identity.  This would significantly reduce the computation and would be an ultimate goal, though we find its implementation non-trivial.
+      <br><br>
+      Finally, the nature of the minimax algorithm always assumes perfect play by the opponent and does not capitalize on possible mistakes or traps that a human opponent could make.  Thus it plays very passively but a more aggressive algorithm would deviate from the well-studied minimax and is also non-trivial.  We have seen other alternatives to our parellel approach and even to alpha-beta pruning itself, in other papers by Rivest and others, but for this project, we chose to stick to our version of parllellized alpha-beta pruning as it is indeed the most classic model.
 
     </div>
 
